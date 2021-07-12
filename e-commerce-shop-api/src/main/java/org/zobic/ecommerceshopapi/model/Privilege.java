@@ -13,14 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Privilege {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  @GenericGenerator(
-    name = "UUID",
-    strategy = "org.hibernate.id.UUIDGenerator"
-  )
-  private UUID id;
+public class Privilege extends GenericUuidModel{
 
   @Column(unique = true)
   private String title;

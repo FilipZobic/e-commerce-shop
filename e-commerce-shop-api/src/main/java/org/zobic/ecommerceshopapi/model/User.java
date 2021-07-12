@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -16,15 +15,15 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User extends GenericUuidModel {
 
-  @Id
-  @GeneratedValue(generator = "UUID")
-  @GenericGenerator(
-    name = "UUID",
-    strategy = "org.hibernate.id.UUIDGenerator"
-  )
-  private UUID id; // change to UUID and inherit @SuperClass with defined UUID
+  public User(UUID id, String username, String password, String email, Collection<Role> roles) {
+    super(id);
+    this.username = username;
+    this.password = password;
+    this.email = email;
+    this.roles = roles;
+  }
 
   @Column(unique = true, nullable = false)
   private String username;

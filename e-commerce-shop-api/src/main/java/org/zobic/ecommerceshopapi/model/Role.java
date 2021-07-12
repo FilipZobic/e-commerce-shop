@@ -8,21 +8,13 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.UUID;
 
 @Entity
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
-  @Id
-  @GeneratedValue(generator = "UUID")
-  @GenericGenerator(
-    name = "UUID",
-    strategy = "org.hibernate.id.UUIDGenerator"
-  )
-  private UUID id;
+public class Role extends GenericUuidModel{
 
   @Column(unique = true)
   private String title;

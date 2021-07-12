@@ -31,7 +31,7 @@ public class UserServiceImplementation implements UserService {
   public User registerUser(UserDto userDto) {
 
     String encryptedPassword = passwordEncoder.encode(userDto.getPassword());
-    User newUser = new User(null, userDto.getUsername(), encryptedPassword, userDto.getEmail(), Arrays.asList(this.roleService.findByTitle("ROLE_USER")));
+    User newUser = new User(userDto.getUsername(), encryptedPassword, userDto.getEmail(), Arrays.asList(this.roleService.findByTitle("ROLE_USER")));
 
     return this.userRepository.registerUser(newUser);
   }
