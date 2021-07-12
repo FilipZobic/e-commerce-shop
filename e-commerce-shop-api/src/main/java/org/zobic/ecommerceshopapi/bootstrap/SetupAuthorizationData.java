@@ -21,9 +21,6 @@ public class SetupAuthorizationData implements ApplicationListener<ContextRefres
 
   private final RoleService roleService;
 
-  @Autowired
-  UserServiceImplementation userServiceImplementation;
-
   public SetupAuthorizationData(PrivilegeServiceImplementation privilegeService, RoleServiceImplementation roleService) {
     this.privilegeService = privilegeService;
     this.roleService = roleService;
@@ -45,7 +42,7 @@ public class SetupAuthorizationData implements ApplicationListener<ContextRefres
     Role roleAdmin = this.roleService.findOrCreateIfNotFound("ROLE_ADMIN", adminPrivileges);
 
     List<Privilege> userPrivileges = Arrays.asList(readSelfUserDataPrivilege, writeSelfUserDataPrivilege);
-    Role roleUser = this.roleService.findOrCreateIfNotFound("ROLE_USER", adminPrivileges);
+    Role roleUser = this.roleService.findOrCreateIfNotFound("ROLE_USER", userPrivileges);
 
     List<Privilege> guestPrivileges = new ArrayList<>();
     Role guestRole = this.roleService.findOrCreateIfNotFound("ROLE_GUEST", guestPrivileges);

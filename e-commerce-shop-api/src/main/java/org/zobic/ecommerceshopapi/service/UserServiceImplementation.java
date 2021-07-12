@@ -7,9 +7,8 @@ import org.springframework.stereotype.Service;
 import org.zobic.ecommerceshopapi.dto.UserDto;
 import org.zobic.ecommerceshopapi.model.User;
 import org.zobic.ecommerceshopapi.repository.UserRepository;
-import org.zobic.ecommerceshopapi.repository.UserRepositoryPostgreSqlImplementation;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 // add throwable exceptions
@@ -20,16 +19,19 @@ public class UserServiceImplementation implements UserService {
 
   private PasswordEncoder passwordEncoder;
 
-  public UserServiceImplementation(UserRepositoryPostgreSqlImplementation userRepository, PasswordEncoder passwordEncoder) {
+  private RoleService roleService;
+
+  public UserServiceImplementation(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleServiceImplementation roleService) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
+    this.roleService = roleService;
   }
 
   @Override
   public User registerUser(UserDto userDto) {
 
     String encryptedPassword = passwordEncoder.encode(userDto.getPassword());
-    User newUser = new User(null, userDto.getUsername(), encryptedPassword, userDto.getEmail(), new ArrayList<>());
+    User newUser = new User(null, userDto.getUsername(), encryptedPassword, userDto.getEmail(), Arrays.asList(this.roleService.findByTitle("ROLE_USER")));
 
     return this.userRepository.registerUser(newUser);
   }

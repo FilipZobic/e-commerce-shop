@@ -22,3 +22,5 @@ spring:
     store-type: redis
 
   main.allow-bean-definition-overriding: true
+
+  jackson.default-property-inclusion: non_empty
