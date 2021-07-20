@@ -16,4 +16,7 @@ public interface UserRepositoryPostgreSql extends PagingAndSortingRepository <Us
 
   @Query("SELECT u FROM User u WHERE u.email LIKE :email")
   Optional<User> findUserByEmail(String email);
+
+  @Query("SELECT u FROM User u WHERE u.id = :id")
+  Optional<User> findUserByIdEnableFilters(UUID id);
 }

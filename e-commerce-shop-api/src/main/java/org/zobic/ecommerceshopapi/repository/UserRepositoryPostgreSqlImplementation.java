@@ -35,7 +35,7 @@ public class UserRepositoryPostgreSqlImplementation implements UserRepository {
 
   @Override
   public Optional<User> findUserById(UUID id) {
-    return this.userRepositoryPostgreSql.findById(id);
+    return this.userRepositoryPostgreSql.findUserByIdEnableFilters(id);
   }
 
   @Override

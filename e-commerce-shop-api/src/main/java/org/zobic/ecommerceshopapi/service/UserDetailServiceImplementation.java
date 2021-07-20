@@ -11,18 +11,17 @@ import org.zobic.ecommerceshopapi.model.Role;
 import org.zobic.ecommerceshopapi.model.User;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 @Service
 public class UserDetailServiceImplementation implements UserDetailsService {
 
-  private final UserService userService;
+  private final UserDetailsHelperService userService;
 
   private final RoleService roleService;
 
-  public UserDetailServiceImplementation(UserService userService, RoleService roleService) {
+  public UserDetailServiceImplementation(UserDetailsHelperService userService, RoleService roleService) {
     this.userService = userService;
     this.roleService = roleService;
   }
@@ -31,14 +30,10 @@ public class UserDetailServiceImplementation implements UserDetailsService {
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
     User user = this.userService.findUserByUsername(username).orElse(null);
-
     if (user == null) {
-      System.out.println("CREATING GUEST USER");
-      return new org.springframework.security.core.userdetails.User(
-        "", "", getAuthorities(Arrays.asList(roleService.findByTitle("ROLE_GUEST"))));
+      return null;
     }
-
-    return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthorities(user.getRoles()));
+    return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), true,true,true,true,getAuthorities(user.getRoles()));
   }
 
   private Collection<? extends GrantedAuthority> getAuthorities(

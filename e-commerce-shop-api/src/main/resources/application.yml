@@ -20,7 +20,22 @@ spring:
     port: 6379
   session:
     store-type: redis
-
   main.allow-bean-definition-overriding: true
-
   jackson.default-property-inclusion: non_empty
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+  mail:
+    host: smtp.mailtrap.io
+    port: 2525
+    username: 35503ab9493f2f
+    password: 88736497a6d291
+
+# Cookie configuration
+#server.servlet.session.cookie.http-only: true
+#server.servlet.session.cookie.secure: true
+link:
+  value: http://localhost:8080
+mail:
+  automatic:
+    address: noreply@localhost.com

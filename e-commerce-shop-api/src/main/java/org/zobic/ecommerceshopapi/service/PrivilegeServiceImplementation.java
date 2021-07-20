@@ -5,7 +5,6 @@ import org.zobic.ecommerceshopapi.model.Privilege;
 import org.zobic.ecommerceshopapi.repository.PrivilegeRepository;
 import org.zobic.ecommerceshopapi.repository.PrivilegeRepositoryPostgreSqlImplementation;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service

@@ -1,6 +1,7 @@
 package org.zobic.ecommerceshopapi.service;
 
 import org.springframework.stereotype.Service;
+import org.zobic.ecommerceshopapi.exception.ResourceNotFoundException;
 import org.zobic.ecommerceshopapi.model.Privilege;
 import org.zobic.ecommerceshopapi.model.Role;
 import org.zobic.ecommerceshopapi.repository.RoleRepository;
@@ -8,6 +9,7 @@ import org.zobic.ecommerceshopapi.repository.RoleRepositoryPostgreSqlImplementat
 
 import java.util.Collection;
 import java.util.Optional;
+
 
 @Service
 public class RoleServiceImplementation implements RoleService{
@@ -22,7 +24,7 @@ public class RoleServiceImplementation implements RoleService{
   public Role findOrCreateIfNotFound(String title, Collection<Privilege> privileges) {
 
     Optional<Role> role = this.roleRepository.findByTitle(title);
-
+    System.out.println();
     if (role.isPresent()) {
       return role.get();
     } else {
@@ -33,7 +35,7 @@ public class RoleServiceImplementation implements RoleService{
   }
 
   @Override
-  public Role findByTitle(String title) {
-    return this.roleRepository.findByTitle(title).orElseThrow(() -> new RuntimeException("Role not found"));
+  public Role findByTitle(String title) throws ResourceNotFoundException {
+    return this.roleRepository.findByTitle(title).orElseThrow(() -> new ResourceNotFoundException("Role not found"));
   }
 }

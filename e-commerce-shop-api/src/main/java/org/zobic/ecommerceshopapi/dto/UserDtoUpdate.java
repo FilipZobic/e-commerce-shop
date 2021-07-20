@@ -1,5 +1,6 @@
 package org.zobic.ecommerceshopapi.dto;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
@@ -9,7 +10,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -17,7 +17,7 @@ import java.util.UUID;
 @Setter
 @Getter
 @Builder
-public class UserDto {
+public class UserDtoUpdate {
 
   private UUID id;
 
@@ -26,7 +26,6 @@ public class UserDto {
   private String username;
 
   @JsonDeserialize(using= WhiteSpaceRemovalDeserializer.class)
-  @NotEmpty
   @Size(min = 10, message = "Password must contain at least 10 characters")
   @Pattern(regexp = ".*[0-9].*", message = "Password must contain at least one number")
   private String password;
@@ -42,11 +41,5 @@ public class UserDto {
   @JsonProperty("address")
   private AddressDto address;
 
-  private Boolean isDeleted;
-
   private Boolean isEnabled;
-
-  private UUID verificationToken;
-
-  private Set<String> grantedAuthorities;
 }

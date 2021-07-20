@@ -1,11 +1,9 @@
 package org.zobic.ecommerceshopapi.model;
 
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.UUID;
 
 @Entity
 @Setter

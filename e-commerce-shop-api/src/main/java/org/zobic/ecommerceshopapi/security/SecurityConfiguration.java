@@ -30,8 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   private PasswordEncoder passwordEncoder;
 
-  public SecurityConfiguration(UserAuthenticationEntryPoint userAuthenticationEntryPoint, UserDetailServiceImplementation userDetailServiceImplementation, PasswordEncoder passwordEncoder) {
-    this.userAuthenticationEntryPoint = userAuthenticationEntryPoint;
+  public SecurityConfiguration(UserDetailServiceImplementation userDetailServiceImplementation, PasswordEncoder passwordEncoder) {
     this.userDetailServiceImplementation = userDetailServiceImplementation;
     this.passwordEncoder = passwordEncoder;
   }
@@ -53,8 +52,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
-      .exceptionHandling().authenticationEntryPoint(userAuthenticationEntryPoint)
-      .and()
+//      .exceptionHandling().authenticationEntryPoint(userAuthenticationEntryPoint)
+//      .and()
       .addFilterBefore(new UsernamePasswordAuthFilter(), BasicAuthenticationFilter.class)
       .csrf().disable()
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
@@ -65,7 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .antMatchers(HttpMethod.GET, "/api/users/{id}").hasAuthority("READ_SELF_USER_DATA_PRIVILEGE")
       .antMatchers(HttpMethod.DELETE, "/api/users/{id}").hasAuthority("MODIFY_ALL_USER_DATA_PRIVILEGE")
       .antMatchers(HttpMethod.GET, "/api/users").hasAuthority("READ_ALL_USER_DATA_PRIVILEGE")
-      .antMatchers(HttpMethod.POST, "/api/login", "/api/register").permitAll()
+      .antMatchers(HttpMethod.POST, "/api/login", "/api/register", "api/registrationConfirmation").permitAll()
       .anyRequest().authenticated();
   }
 
@@ -73,7 +72,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Bean
   public RoleHierarchy roleHierarchy() {
     RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-    String hierarchy = "ROLE_ADMIN > ROLE_USER \n ROLE_USER > ROLE_GUEST";
+
+    String hierarchy =
+      "ROLE_ADMIN > ROLE_USER " +
+      "\n ROLE_USER > ROLE_GUEST " +
+      "\n READ_ALL_USER_DATA_PRIVILEGE > READ_SELF_USER_DATA_PRIVILEGE " +
+      "\n MODIFY_ALL_USER_DATA_PRIVILEGE > MODIFY_SELF_USER_DATA_PRIVILEGE";
     roleHierarchy.setHierarchy(hierarchy);
     return roleHierarchy;
   }
