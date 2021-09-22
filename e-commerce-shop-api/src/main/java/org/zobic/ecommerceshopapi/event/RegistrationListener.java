@@ -33,7 +33,7 @@ public class RegistrationListener extends GenericMailListener implements Applica
     String recipient = user.getEmail();
     String subject = "Confirm Registration";
     String confirmationUrl = event.getUrl() + "/api/registrationConfirmation?token=" + token.getId().toString();
-    String message = "Username: " + user.getUsername() + "\n\n";
+    String message = "Username: " + user.getEmail() + "\n\n";
     message += messages.getMessage("message.regSuccLink", null, Locale.ENGLISH);
     message += "\r\n" + this.domain + confirmationUrl;
 

@@ -22,8 +22,8 @@ public class UserDto {
   private UUID id;
 
   @JsonDeserialize(using= WhiteSpaceRemovalDeserializer.class)
-  @NotEmpty(message = "Username is required")
-  private String username;
+  @NotEmpty(message = "Full name is required")
+  private String fullName;
 
   @JsonDeserialize(using= WhiteSpaceRemovalDeserializer.class)
   @NotEmpty

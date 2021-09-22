@@ -49,7 +49,7 @@ public class UserController {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     User user = this.userService.findUserById(id);
     // Maybe put this logic in findUser
-    if (!user.getUsername().equals(authentication.getName()) && !UtilitySecurity.userHasAdminRole()) {
+    if (!user.getEmail().equals(authentication.getName()) && !UtilitySecurity.userHasAdminRole()) {
       return new ResponseEntity<>("User doesn't have the permissions to request another users information", HttpStatus.FORBIDDEN);
     }
     return new ResponseEntity<>(Utility.userToDto(user), HttpStatus.OK);

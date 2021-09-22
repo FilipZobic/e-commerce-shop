@@ -52,8 +52,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
-//      .exceptionHandling().authenticationEntryPoint(userAuthenticationEntryPoint)
-//      .and()
+//      .cors().disable()
+      .cors()
+      .and()
       .addFilterBefore(new UsernamePasswordAuthFilter(), BasicAuthenticationFilter.class)
       .csrf().disable()
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)

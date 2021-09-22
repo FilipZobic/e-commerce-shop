@@ -26,7 +26,7 @@ public class NewTokenGeneratedListener extends GenericMailListener implements Ap
     String recipient = user.getEmail();
     String subject = "New Confirmation Link";
     String confirmationUrl =  "/api/registrationConfirmation?token=" + event.getVerificationToken().getId().toString();
-    String message = "Username: " + user.getUsername() + "\n\n";
+    String message = "Username: " + user.getEmail() + "\n\n";
     message += messages.getMessage("message.regReSendSuccLink", null, Locale.ENGLISH);
     message += "\r\n" + this.domain + confirmationUrl;
     mailSender.send(Utility.generateMailMessage(subject, message, recipient, this.sender));

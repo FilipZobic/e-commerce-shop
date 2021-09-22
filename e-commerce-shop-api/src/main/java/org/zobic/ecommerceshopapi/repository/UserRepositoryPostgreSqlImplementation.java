@@ -39,11 +39,6 @@ public class UserRepositoryPostgreSqlImplementation implements UserRepository {
   }
 
   @Override
-  public Optional<User> findUserByUsername(String username) {
-    return this.userRepositoryPostgreSql.findUserByUsername(username);
-  }
-
-  @Override
   public Optional<User> findUserByEmail(String email) {
     return this.userRepositoryPostgreSql.findUserByEmail(email);
   }

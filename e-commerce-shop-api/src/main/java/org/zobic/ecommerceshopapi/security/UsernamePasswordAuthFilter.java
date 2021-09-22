@@ -39,7 +39,7 @@ public class UsernamePasswordAuthFilter extends OncePerRequestFilter {
       CredentialsDto credentialsDto = MAPPER.readValue(httpServletRequest.getInputStream(), CredentialsDto.class);
 
         SecurityContextHolder.getContext().setAuthentication(
-          new UsernamePasswordAuthenticationToken(credentialsDto.getUsername(), credentialsDto.getPassword()));
+          new UsernamePasswordAuthenticationToken(credentialsDto.getEmail(), credentialsDto.getPassword()));
 
     }
     filterChain.doFilter(httpServletRequest, httpServletResponse);

@@ -61,7 +61,7 @@ public class UserServiceImplementation implements UserService {
     if (userDto.getAddress() != null) {
       address = this.addressService.save(userDto.getAddress());
     }
-    User newUser = new User(userDto.getUsername(), encryptedPassword, userDto.getEmail(), Arrays.asList(this.roleService.findByTitle("ROLE_ADMIN")), address, false);
+    User newUser = new User(userDto.getFullName(), encryptedPassword, userDto.getEmail(), Arrays.asList(this.roleService.findByTitle("ROLE_ADMIN")), address, false);
     return this.userRepository.registerUser(newUser);
   }
 
@@ -83,19 +83,19 @@ public class UserServiceImplementation implements UserService {
     }
 
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    boolean isUserSelfModify = userToUpdate.getUsername().equals(authentication.getName());
+    boolean isUserSelfModify = userToUpdate.getEmail().equals(authentication.getName());
     boolean isAdmin = utilitySecurity.userHasAdminRole();
 
-    userToUpdate.setUsername(userDto.getUsername());
+    userToUpdate.setFullName(userDto.getFullName());
     userToUpdate.setEmail(userDto.getEmail());
     if (userDto.getPassword() != null) {
       userToUpdate.setPassword(this.passwordEncoder.encode(userDto.getPassword()));
     }
 
-    if (authentication.getName().equals(userToUpdate.getUsername()) && !isAdmin) {
+    if (authentication.getName().equals(userToUpdate.getEmail()) && !isAdmin) {
       User user = this.userRepository.registerUser(userToUpdate);
       if (isUserSelfModify) {
-        this.utilitySecurity.updateSecurityContext(user.getUsername());
+        this.utilitySecurity.updateSecurityContext(user.getEmail());
       }
       return user;
 
@@ -111,7 +111,7 @@ public class UserServiceImplementation implements UserService {
         User user = this.userRepository.registerUser(userToUpdate);
 
         if (isUserSelfModify) {
-          this.utilitySecurity.updateSecurityContext(user.getUsername());
+          this.utilitySecurity.updateSecurityContext(user.getEmail());
         }
         return user;
       }
@@ -126,7 +126,7 @@ public class UserServiceImplementation implements UserService {
     filter.setParameter("isDeleted", false);
     System.out.println(session.getEnabledFilter("deletedUserFilter").getFilterDefinition().getFilterName());
     User user = this.findUserById(id);
-    System.out.println(user.getUsername());
+    System.out.println(user.getEmail());
     this.userRepository.deleteUser(id);
     session.disableFilter("deletedUserFilter");
   }
@@ -151,14 +151,9 @@ public class UserServiceImplementation implements UserService {
     if (userDto.getIsEnabled() != null) {
       enabled = userDto.getIsEnabled();
     }
-    User newUser = new User(userDto.getUsername(), encryptedPassword, userDto.getEmail(), Arrays.asList(this.roleService.findByTitle(userDto.getRole())), address, enabled);
+    User newUser = new User(userDto.getFullName(), encryptedPassword, userDto.getEmail(), Arrays.asList(this.roleService.findByTitle(userDto.getRole())), address, enabled);
 
     return this.userRepository.registerUser(newUser);
-  }
-
-  @Override
-  public Optional<User> findUserByUsername(String username) {
-    return this.userRepository.findUserByUsername(username);
   }
 
   @Override

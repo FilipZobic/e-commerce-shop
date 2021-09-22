@@ -17,8 +17,6 @@ public interface UserRepository {
 
   Optional<User> findUserById(UUID id);
 
-  Optional<User> findUserByUsername(String username);
-
   Optional<User> findUserByEmail(String email);
 
   Iterable<User> findAllUsers();

@@ -45,19 +45,16 @@ public class AuthenticationController {
 
     }
     this.eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, request.getLocale(), request.getContextPath()));
-    this.utilitySecurity.updateSecurityContext(user.getUsername());
+    this.utilitySecurity.updateSecurityContext(user.getEmail());
     return new ResponseEntity<>(Utility.userToDto(user), HttpStatus.OK);
   }
 
   @PostMapping(path = "api/login")
   public ResponseEntity<?> login(HttpSession session) {
-    System.out.println("Login: " + SecurityContextHolder.getContext().getAuthentication().getName() + "\nTime login: " + new Date(System.currentTimeMillis())); // command line runner Sf4j
-    System.out.println();
-    if (session.getAttribute("inCart") != null) {
-      // fill out database
-    }
+    System.out.println("Login: " + SecurityContextHolder.getContext().getAuthentication().getName() + "\nTime login: " + new Date(System.currentTimeMillis())); // command line runner Sf4j// }
+
     System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
-    return new ResponseEntity<>("login", HttpStatus.OK);
+    return new ResponseEntity<>(Utility.userToDto(this.userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).get()), HttpStatus.OK);
   }
 
   @PostMapping("api/logout")

@@ -22,8 +22,6 @@ public interface UserService {
 
   User findUserById(UUID id) throws Exception;
 
-  Optional<User> findUserByUsername(String username);
-
   Optional<User> findUserByEmail(String email);
 
   Iterable<User> findAllUsers();

@@ -27,8 +27,8 @@ import java.util.UUID;
 
 public class User extends GenericUuidModel {
 
-  @Column(unique = true, nullable = false)
-  private String username;
+  @Column(nullable = false, unique = false)
+  private String fullName;
 
   @Column(nullable = false)
   private String password;
@@ -54,16 +54,16 @@ public class User extends GenericUuidModel {
   @JoinColumn(name = "address_id")
   private Address address = null;
 
-  public User(UUID id, String username, String password, String email, Collection<Role> roles) {
+  public User(UUID id, String fullName, String password, String email, Collection<Role> roles) {
     super(id);
-    this.username = username;
+    this.fullName = fullName;
     this.password = password;
     this.email = email;
     this.roles = roles;
   }
 
-  public User(String username, String password, String email, Collection<Role>  roles, Address address, Boolean isEnabled) {
-    this.username = username;
+  public User(String fullName, String password, String email, Collection<Role>  roles, Address address, Boolean isEnabled) {
+    this.fullName = fullName;
     this.password = password;
     this.email = email;
     this.roles = roles;

@@ -23,7 +23,7 @@ public class UserDtoUpdate {
 
   @JsonDeserialize(using= WhiteSpaceRemovalDeserializer.class)
   @NotEmpty(message = "Username is required")
-  private String username;
+  private String fullName;
 
   @JsonDeserialize(using= WhiteSpaceRemovalDeserializer.class)
   @Size(min = 10, message = "Password must contain at least 10 characters")

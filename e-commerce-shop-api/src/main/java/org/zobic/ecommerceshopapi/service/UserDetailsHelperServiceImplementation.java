@@ -23,11 +23,11 @@ public class UserDetailsHelperServiceImplementation implements UserDetailsHelper
 
   @Override
   @Transactional
-  public Optional<User> findUserByUsername(String user) {
+  public Optional<User> findUserByEmail(String email) {
     Session session = entityManager.unwrap(Session.class);
     Filter filter = session.enableFilter("deletedUserFilter");
     filter.setParameter("isDeleted", false);
-    Optional<User> foundUser = this.userRepository.findUserByUsername(user);
+    Optional<User> foundUser = this.userRepository.findUserByEmail(email);
     session.disableFilter("deletedUserFilter");
     return foundUser;
   }

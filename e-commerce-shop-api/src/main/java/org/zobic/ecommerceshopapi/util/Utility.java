@@ -42,10 +42,10 @@ public class Utility {
       .id(user.getId())
       .address(addressDto)
       .email(user.getEmail())
-      .username(user.getUsername())
       .grantedAuthorities(grantedAuthorities)
       .isDeleted(isDeleted)
       .isEnabled(user.getEnabled())
+      .fullName(user.getFullName())
       .build();
   }
 

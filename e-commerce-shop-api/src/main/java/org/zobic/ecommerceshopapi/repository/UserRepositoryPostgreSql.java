@@ -11,9 +11,6 @@ import java.util.UUID;
 @Repository
 public interface UserRepositoryPostgreSql extends PagingAndSortingRepository <User, UUID> {
 
-  @Query("SELECT u FROM User u WHERE u.username LIKE :username")
-  Optional<User> findUserByUsername(String username);
-
   @Query("SELECT u FROM User u WHERE u.email LIKE :email")
   Optional<User> findUserByEmail(String email);
 
