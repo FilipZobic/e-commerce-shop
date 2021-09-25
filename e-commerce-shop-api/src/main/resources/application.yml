@@ -18,8 +18,17 @@ spring:
   redis:
     host: localhost
     port: 6379
-  session:
-    store-type: redis
+    lettuce:
+      shutdown-timeout: 30000
+      pool:
+        # Connection pool maximum connections (negative for no limit) default 8
+        max-active: 30
+        # Maximum free connections in connection pool default 8
+        max-idle: 8
+        # Minimum free connections in connection pool default 0
+        min-idle: 0
+#  session:
+#    store-type: redis
   main.allow-bean-definition-overriding: true
   jackson.default-property-inclusion: non_empty
   messages:

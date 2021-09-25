@@ -25,7 +25,9 @@ public class WebConfiguration implements WebMvcConfigurer {
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
       .allowedOrigins("http://localhost:3000","http://localhost:4200") // React, Angular
-      .allowedMethods("GET", "POST", "PUT", "DELETE");
+      .allowedMethods("GET", "POST", "PUT", "DELETE")
+      .allowCredentials(true)
+      .allowedHeaders("*", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Access-Control-Allow-Credentials");
     WebMvcConfigurer.super.addCorsMappings(registry);
   }
 

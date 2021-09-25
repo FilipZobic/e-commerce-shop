@@ -10,7 +10,6 @@ import org.zobic.ecommerceshopapi.dto.UserDto;
 import org.zobic.ecommerceshopapi.dto.UserDtoUpdate;
 import org.zobic.ecommerceshopapi.model.User;
 import org.zobic.ecommerceshopapi.service.UserService;
-import org.zobic.ecommerceshopapi.service.UserServiceImplementation;
 import org.zobic.ecommerceshopapi.util.Utility;
 import org.zobic.ecommerceshopapi.util.UtilitySecurity;
 

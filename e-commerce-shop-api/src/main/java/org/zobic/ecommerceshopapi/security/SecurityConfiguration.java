@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.zobic.ecommerceshopapi.service.UserDetailServiceImplementation;
 
@@ -49,15 +50,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     return super.authenticationManagerBean();
   }
 
+  @Bean
+  public AuthenticationSessionFilter authenticationTokenFilterBean() throws Exception {
+    AuthenticationSessionFilter authenticationTokenFilter = new AuthenticationSessionFilter();
+    authenticationTokenFilter.setAuthenticationManager(authenticationManagerBean());
+    return authenticationTokenFilter;
+  }
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
-//      .cors().disable()
       .cors()
       .and()
-      .addFilterBefore(new UsernamePasswordAuthFilter(), BasicAuthenticationFilter.class)
+      .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
       .csrf().disable()
-      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
       .and()
       .authorizeRequests()
 
