@@ -101,4 +101,11 @@ public class SessionService {
     Session session = sortedList.get(0);
     this.deleteSession(session);
   }
+
+  public void deleteSessionById(String sessionId) {
+    Session session = this.getSessionById(sessionId);
+    if (!isSessionNull(session)) {
+      this.deleteSession(session);
+    }
+  }
 }

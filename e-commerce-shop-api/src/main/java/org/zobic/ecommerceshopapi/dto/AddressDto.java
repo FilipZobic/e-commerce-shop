@@ -5,6 +5,7 @@ import lombok.*;
 import org.zobic.ecommerceshopapi.jackson.WhiteSpaceRemovalDeserializer;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Setter
@@ -31,7 +32,7 @@ public class AddressDto {
 
     @JsonDeserialize(using= WhiteSpaceRemovalDeserializer.class)
     @NotNull
-    @Size(min = 1, max = 32)
+    @Pattern(regexp = "[0-9]{5}", message = "Zip code is 5 digit number")
     private String zipCode;
 
 

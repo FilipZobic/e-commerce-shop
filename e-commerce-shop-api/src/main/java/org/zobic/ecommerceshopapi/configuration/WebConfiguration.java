@@ -7,6 +7,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.zobic.ecommerceshopapi.security.AuthenticationSessionFilter;
 
 import java.time.Duration;
 
@@ -27,7 +28,8 @@ public class WebConfiguration implements WebMvcConfigurer {
       .allowedOrigins("http://localhost:3000","http://localhost:4200") // React, Angular
       .allowedMethods("GET", "POST", "PUT", "DELETE")
       .allowCredentials(true)
-      .allowedHeaders("*", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Access-Control-Allow-Credentials");
+      .exposedHeaders(AuthenticationSessionFilter.X_ACCESS_TOKEN)
+      .allowedHeaders("*", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Access-Control-Allow-Credentials", AuthenticationSessionFilter.X_ACCESS_TOKEN);
     WebMvcConfigurer.super.addCorsMappings(registry);
   }
 

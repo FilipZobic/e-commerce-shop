@@ -27,3 +27,11 @@ Relational database of choice is PostgreSql.
 * PostgreSql
   * Configure System ENV variables (see application.yml)
 * Java 11
+
+### Features
+
+* Security
+* Email Verification
+* Communication with external API's
+* Logical deletion
+* Paging

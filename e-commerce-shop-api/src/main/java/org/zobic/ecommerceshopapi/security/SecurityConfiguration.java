@@ -72,7 +72,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .antMatchers(HttpMethod.GET, "/api/users/{id}").hasAuthority("READ_SELF_USER_DATA_PRIVILEGE")
       .antMatchers(HttpMethod.DELETE, "/api/users/{id}").hasAuthority("MODIFY_ALL_USER_DATA_PRIVILEGE")
       .antMatchers(HttpMethod.GET, "/api/users").hasAuthority("READ_ALL_USER_DATA_PRIVILEGE")
-      .antMatchers(HttpMethod.POST, "/api/login", "/api/register", "api/registrationConfirmation").permitAll()
+      .antMatchers(HttpMethod.POST, "/api/login", "/api/register", "api/registrationConfirmation", "/api/isEmailTaken").permitAll()
+      .antMatchers(HttpMethod.GET, "/api/countries").permitAll()
       .anyRequest().authenticated();
   }
 

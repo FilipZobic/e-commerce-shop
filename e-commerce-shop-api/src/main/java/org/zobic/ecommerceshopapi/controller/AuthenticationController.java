@@ -1,5 +1,6 @@
 package org.zobic.ecommerceshopapi.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.zobic.ecommerceshopapi.dto.CheckIfEmailTakenDto;
 import org.zobic.ecommerceshopapi.session.SessionService;
 import org.zobic.ecommerceshopapi.dto.CredentialsDto;
 import org.zobic.ecommerceshopapi.dto.UserDto;
@@ -17,7 +19,6 @@ import org.zobic.ecommerceshopapi.exception.TokenExpiredException;
 import org.zobic.ecommerceshopapi.model.User;
 import org.zobic.ecommerceshopapi.security.AuthenticationSessionFilter;
 import org.zobic.ecommerceshopapi.service.UserService;
-import org.zobic.ecommerceshopapi.service.UserServiceImplementation;
 import org.zobic.ecommerceshopapi.util.Utility;
 import org.zobic.ecommerceshopapi.util.UtilitySecurity;
 
@@ -37,35 +38,33 @@ public class AuthenticationController {
 
   private ApplicationEventPublisher eventPublisher;
 
-  public AuthenticationController(UserServiceImplementation userService, UtilitySecurity utilitySecurity, ApplicationEventPublisher eventPublisher) {
+  private SessionService sessionService;
+
+  public AuthenticationController(UserService userService, UtilitySecurity utilitySecurity, ApplicationEventPublisher eventPublisher, SessionService sessionService) {
     this.userService = userService;
     this.utilitySecurity = utilitySecurity;
     this.eventPublisher = eventPublisher;
+    this.sessionService = sessionService;
   }
 
-  // This logic should go to the service
+  @PostMapping(path = "api/isEmailTaken")
+  public ResponseEntity<Map<String, Object>> register(@Valid @RequestBody CheckIfEmailTakenDto validationDto) throws Exception {
+    Optional<User> user = this.userService.findUserByEmail(validationDto.getEmail());
+    Map<String, Object> response = new HashMap<>();
+    response.put("isEmailTaken", user.isPresent());
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+
   @PostMapping(path = "api/register")
   public ResponseEntity<UserDto> register(@Valid @RequestBody UserDto userDto, HttpSession session, HttpServletRequest request) throws Exception {
     User user = this.userService.registerUser(userDto);
-    if (session.getAttribute("inCart") != null) {
-
-    }
     this.eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, request.getLocale(), request.getContextPath()));
     this.utilitySecurity.updateSecurityContext(user.getEmail());
     return new ResponseEntity<>(Utility.userToDto(user), HttpStatus.OK);
   }
 
-  @Autowired
-  SessionService sessionService;
-
-  @Autowired
-  private PasswordEncoder passwordEncoder;
-
   @PostMapping(path = "api/login")
   public ResponseEntity<?> login(@RequestBody CredentialsDto credentialsDto, HttpServletResponse response) {
-//    System.out.println("Login: " + SecurityContextHolder.getContext().getAuthentication().getName() + "\nTime login: " + new Date(System.currentTimeMillis())); // command line runner Sf4j// }
-//
-//    System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
     Optional<User> userOptional = this.userService.findUserByEmail(credentialsDto.getEmail());
 
     if (userOptional.isPresent()){
@@ -77,11 +76,10 @@ public class AuthenticationController {
     return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
   }
 
-  @PostMapping("api/logout")
-  public ResponseEntity<Void> logout(HttpSession session) {
+  @DeleteMapping("api/logout")
+  public ResponseEntity<Void> logout(HttpServletRequest request) {
     System.out.println("Logout: " + SecurityContextHolder.getContext().getAuthentication().getName() + "\nTime logout: " + new Date(System.currentTimeMillis())); // command line runner Sf4j
-    SecurityContextHolder.clearContext();
-    session.invalidate();
+    sessionService.deleteSessionById(request.getHeader(AuthenticationSessionFilter.X_ACCESS_TOKEN));
     return ResponseEntity.noContent().build();
   }
 

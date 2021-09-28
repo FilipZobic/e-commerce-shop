@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import org.zobic.ecommerceshopapi.jackson.WhiteSpaceRemovalDeserializer;
+import org.zobic.ecommerceshopapi.util.ValidationPatterns;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -27,12 +28,13 @@ public class UserDto {
 
   @JsonDeserialize(using= WhiteSpaceRemovalDeserializer.class)
   @NotEmpty
-  @Size(min = 10, message = "Password must contain at least 10 characters")
+  @Size(min = 6, message = "Password must contain at least 6 characters")
   @Pattern(regexp = ".*[0-9].*", message = "Password must contain at least one number")
   private String password;
 
   @JsonDeserialize(using= WhiteSpaceRemovalDeserializer.class)
   @NotEmpty(message = "Email is required")
+  @Pattern(regexp = ValidationPatterns.EMAIL_PATTERN, message = "Bad email format")
   private String email;
 
   @Pattern(regexp = "ROLE_[A-Z]+")

@@ -15,7 +15,7 @@ import java.util.List;
 public class CountryServiceImplementation implements CountryService {
 
   private final RestTemplate restTemplate;
-  private final String uri = "https://restcountries.eu/rest/v2/";
+  private final String uri = "https://restcountries.com/v2/";
 
   public CountryServiceImplementation(RestTemplate restTemplate) {
     this.restTemplate = restTemplate;
