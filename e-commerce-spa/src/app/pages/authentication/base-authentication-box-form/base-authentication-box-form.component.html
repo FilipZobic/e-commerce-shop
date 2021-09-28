@@ -1,0 +1,18 @@
+<div id="box-container" [class.mat-elevation-z8]="true">
+  <div id="box-container-inner">
+    <div id="buttons-container">
+      <button mat-raised-button color="primary" (click)="switchToSignIn()">Login</button>
+      <button mat-raised-button color="primary" (click)="switchToRegistration()">Register</button>
+    </div>
+    <div>
+      <app-authentication-login-form
+        *ngIf="active === LOGIN; else elseBlock"
+      (submitLoginEmitter)="handleLoginSubmit($event)">
+
+      </app-authentication-login-form>
+      <ng-template #elseBlock>
+        <app-authentication-registration-form></app-authentication-registration-form>
+      </ng-template>
+    </div>
+  </div>
+</div>
