@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ErrorStateMatcher} from "@angular/material/core";
-import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {FormControl, FormGroup, FormGroupDirective, NgForm} from "@angular/forms";
 import {Country} from "../../../model/country";
 import {CountryService} from "../../../services/country.service";
-import {AuthenticationService} from "../../../services/authentication.service";
 import {RegistrationDto} from "../../../model/dto/registration-dto";
+import {InputValidationService} from "../../../services/input-validation.service";
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -22,19 +22,10 @@ export class AuthenticationRegistrationFormComponent {
   form: FormGroup = new FormGroup({});
   countries: Country[] = [{alpha2Code: "RS", name: "Serbia"}];
   hide = true;
-  constructor(private countryService: CountryService, private authenticationService: AuthenticationService, private fb: FormBuilder) {
-    // fb.group(
-    //   {
-    //     "password": [null],
-    //     "confirmPassword": [null],
-    //     "email": [null, authenticationService.validateUsernameNotTaken.bind(authenticationService)],
-    //     "country": [null],
-    //     "fullName": [null],
-    //     "address": [null],
-    //     "city": [null],
-    //     "zipCode": [null],
-    //   }
-    // )
+  @Output()
+  submitLoginEmitter: EventEmitter<RegistrationDto> = new EventEmitter<RegistrationDto>();
+
+  constructor(private countryService: CountryService, private inputValidationService: InputValidationService) {
     this.form.addControl('password', new FormControl(null));
     this.form.addControl('confirmPassword', new FormControl(null));
     this.form.addControl('email', new FormControl(null));
@@ -46,9 +37,9 @@ export class AuthenticationRegistrationFormComponent {
     this.countryService.itemsSubject.subscribe(newCountries => {
       this.countries = newCountries;
     })
-    this.form.controls.email.addAsyncValidators(authenticationService.validateUsernameNotTaken.bind(authenticationService))
+    this.form.controls.email.addAsyncValidators(inputValidationService.validateUsernameNotTaken.bind(inputValidationService))
     // @ts-ignore
-    this.form.addValidators(authenticationService.passwordMatchValidator("password", "confirmPassword"));
+    this.form.addValidators(inputValidationService.passwordMatchValidator("password", "confirmPassword"));
   }
 
   matcher = new MyErrorStateMatcher();
@@ -66,7 +57,7 @@ export class AuthenticationRegistrationFormComponent {
           zipCode: this.form.value.zipCode
         }
       }
-      console.log(dto)
+      this.submitLoginEmitter.emit(dto);
     }
   }
 }

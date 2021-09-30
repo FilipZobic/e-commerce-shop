@@ -1,25 +1,12 @@
 <form [formGroup]="form" action="">
   <app-email-input [formGroup]="form"></app-email-input>
-  <!--  check if user exist on focuse out and show error-->
   <app-text-input [formGroup]="form" [errorName]="'Full name'" [label]="'Full name'" [formControlNameInput]="'fullName'" [isRequired]="true"></app-text-input>
   <app-password-input [formGroup]="form" [formControlNameInput]="'password'"></app-password-input>
   <app-password-input [formGroup]="form" [formControlNameInput]="'confirmPassword'" [placeholder]="'Confirm Password'"></app-password-input>
-  <hr>
-<!--  <div>-->
-<!--    <mat-form-field appearance="outline">-->
-<!--      <mat-label>Select a Country</mat-label>-->
-<!--      <mat-select [formControlName]="'country'">-->
-<!--        <mat-option *ngFor="let c of countries;" [value]=c.alpha2Code >{{c.name}}</mat-option>-->
-<!--        <mat-option value="">Default</mat-option>-->
-<!--      </mat-select>-->
-<!--    </mat-form-field>-->
-<!--  </div>-->
   <app-country-select [formGroup]="form" [countries]="countries"></app-country-select>
   <app-text-input [formGroup]="form" [errorName]="'City'" [label]="'City'" [formControlNameInput]="'city'" [isRequired]="true"></app-text-input>
   <app-text-input [formGroup]="form" [errorName]="'Address'" [label]="'Address'" [formControlNameInput]="'address'" [isRequired]="true"></app-text-input>
   <app-text-input [pattern]="'^[0-9]{5}'" [formGroup]="form" [errorName]="'Zip code'" [label]="'Zip code'" [formControlNameInput]="'zipCode'" [isRequired]="true"></app-text-input>
-<!--  zip code may need change in pattern-->
-  <!--  add to all of them size -->
   <div>
     <button (click)="onSubmit()" [disabled]="!form.valid" id="submit" mat-raised-button color="primary">Submit</button>
   </div>

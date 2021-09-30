@@ -11,7 +11,7 @@
 
       </app-authentication-login-form>
       <ng-template #elseBlock>
-        <app-authentication-registration-form></app-authentication-registration-form>
+        <app-authentication-registration-form (submitLoginEmitter)="handleRegistrationSubmit($event)"></app-authentication-registration-form>
       </ng-template>
     </div>
   </div>

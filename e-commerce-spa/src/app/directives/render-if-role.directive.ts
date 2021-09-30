@@ -2,7 +2,7 @@ import {Directive, Input, OnInit, TemplateRef, ViewContainerRef} from '@angular/
 import {RolesValidationService} from "../services/roles-validation.service";
 
 @Directive({
-  selector: '[appRenderIfRole]'
+  selector: '[appIfRoles]'
 })
 export class RenderIfRoleDirective implements OnInit {
 

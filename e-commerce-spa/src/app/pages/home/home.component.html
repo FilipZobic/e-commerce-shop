@@ -1,19 +1,12 @@
 <mat-toolbar color="primary" [class.mat-elevation-z8]="true">
   <span class="example-spacer"></span>
-<!--  <span class="item">-->
-<!--    <a class="active">Home</a>-->
-<!--  </span>-->
-<!--  <span class="item">-->
-<!--    <a href="" class="active">Admin Tools</a>-->
-<!--  </span>-->
-<!--  <span class="item">Purchase History</span>-->
   <a class="active" mat-button>
     <mat-icon class="example-icon">home</mat-icon>
     <span>Home</span>
   </a>
-  <a mat-button>
+  <a mat-button *appIfRoles="['ROLE_ADMIN']" >
     <mat-icon class="example-icon">security</mat-icon>
-    <span >Admin</span>
+    <span>Admin</span>
   </a>
   <a mat-button>
     <mat-icon matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
@@ -45,12 +38,6 @@
       <span>Sign Out</span>
     </button>
   </mat-menu>
-<!--  <div class="item">-->
-<!--    <span>Sign Out</span>-->
-<!--  </div>-->
-<!--  <div class="item">-->
-<!--    <mat-icon class="example-icon" aria-label="Your Cart">shopping_cart</mat-icon>-->
-<!--  </div>-->
 </mat-toolbar>
 <mat-drawer-container>
     <header class="docs-primary-header component-page-header">

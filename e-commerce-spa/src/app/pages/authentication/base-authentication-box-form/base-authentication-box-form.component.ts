@@ -3,6 +3,7 @@ import {UserLoginDto} from "../../../model/dto/user-login-dto";
 import {AuthenticationService} from "../../../services/authentication.service";
 import {CountryService} from "../../../services/country.service";
 import {Country} from "../../../model/country";
+import {RegistrationDto} from "../../../model/dto/registration-dto";
 
 @Component({
   selector: 'app-base-authentication-box-form',
@@ -29,5 +30,9 @@ export class BaseAuthenticationBoxFormComponent {
 
   handleLoginSubmit(userLoginDto: UserLoginDto) {
     this.authenticationService.attemptLogin(userLoginDto);
+  }
+
+  handleRegistrationSubmit(userRegistrationDto: RegistrationDto) {
+    console.log(userRegistrationDto)
   }
 }
