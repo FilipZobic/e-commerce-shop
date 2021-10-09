@@ -21,7 +21,9 @@ import org.zobic.ecommerceshopapi.service.UserDetailServiceImplementation;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true,
+  prePostEnabled = true,
+  jsr250Enabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   private UserDetailServiceImplementation userDetailServiceImplementation;
