@@ -2,18 +2,18 @@ spring:
   # Database
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/e-commerce-shop
+    url: jdbc:postgresql://localhost:5432/e-commerce-shop-test
     username: ${DB_POSTGRESQL_USERNAME}
     password: ${DB_POSTGRESQL_PASSWORD}
   # JPA properties
   jpa:
     hibernate:
-      ddl-auto: update # When you launch the application for the first time - switch "none" at "create"
+      ddl-auto: none # When you launch the application for the first time - switch "none" at "create"
     show-sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
-    generate-ddl: true
+    generate-ddl: false
   # Session storage
   redis:
     host: localhost
@@ -39,6 +39,9 @@ spring:
     port: 2525
     username: 35503ab9493f2f
     password: 88736497a6d291
+  liquibase:
+    enabled: true
+    change-log: classpath:db-scripts/liquibase-changelog-master.xml
 
 # Cookie configuration
 #server.servlet.session.cookie.http-only: true
@@ -48,3 +51,7 @@ link:
 mail:
   automatic:
     address: noreply@localhost.com
+
+#  spring.jpa.hibernate.ddl-auto=none
+#  spring.jpa.properties.hibernate.validator.apply_to_ddl=false
+#  spring.jpa.open-in-view=false

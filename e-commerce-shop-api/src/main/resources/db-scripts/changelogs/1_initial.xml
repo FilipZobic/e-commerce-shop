@@ -1,0 +1,117 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <changeSet id="1" author="Filip">
+      <createTable tableName="role">
+        <column name="id" type="BINARY(16)">
+          <constraints nullable="false" primaryKey="true"/>
+        </column>
+        <column name="title" type="VARCHAR(255)">
+          <constraints unique="true"/>
+        </column>
+      </createTable>
+    </changeSet>
+
+  <changeSet id="2" author="Filip">
+    <createTable tableName="privilege">
+      <column name="id" type="BINARY(16)">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="title" type="VARCHAR(255)">
+        <constraints unique="true"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="3" author="Filip">
+    <createTable tableName="role_privilege">
+      <column name="privilege_id" type="BINARY(16)">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="role_id" type="BINARY(16)">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+    </createTable>
+    <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="role_privilege" constraintName="role_privilege_role"  referencedColumnNames="id" referencedTableName="role"/>
+    <addForeignKeyConstraint baseColumnNames="privilege_id" baseTableName="role_privilege" constraintName="role_privilege_privilege"  referencedColumnNames="id" referencedTableName="privilege"/>
+  </changeSet>
+
+  <changeSet id="4" author="Filip">
+    <createTable tableName="address">
+      <column name="id" type="BINARY(16)">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="address" type="TEXT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="zip_code" type="VARCHAR(32)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="city_name" type="VARCHAR(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="country_code" type="CHAR(2)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="deleted" type="boolean default false">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="5" author="Filip">
+      <createTable tableName="application_user">
+        <column name="id" type="BINARY(16)">
+          <constraints nullable="false" primaryKey="true"/>
+        </column>
+        <column name="email" type="VARCHAR(100)">
+          <constraints unique="true" nullable="false"/>
+        </column>
+        <column name="full_name" type="VARCHAR">
+          <constraints nullable="false"/>
+        </column>
+        <column name="password" type="VARCHAR">
+          <constraints nullable="false"/>
+        </column>
+        <column name="deleted" type="boolean default false">
+          <constraints nullable="false"/>
+        </column>
+        <column name="enabled" type="boolean default false">
+          <constraints nullable="false"/>
+        </column>
+        <column  name="address_id" type="BINARY(16)">
+          <constraints/>
+        </column>
+      </createTable>
+    <addForeignKeyConstraint onUpdate="CASCADE" onDelete="CASCADE" baseColumnNames="address_id" baseTableName="application_user" constraintName="application_user_address"  referencedColumnNames="id" referencedTableName="address"/>
+  </changeSet>
+
+    <changeSet id="6" author="Filip">
+      <createTable tableName="application_user_role">
+        <column name="user_id" type="BINARY(16)">
+          <constraints nullable="false" primaryKey="true"/>
+        </column>
+        <column name="role_id" type="BINARY(16)">
+          <constraints nullable="false" primaryKey="true"/>
+        </column>
+      </createTable>
+      <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="application_user_role" constraintName="application_user_role_user"  referencedColumnNames="id" referencedTableName="application_user"/>
+      <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="application_user_role" constraintName="application_user_role_role"  referencedColumnNames="id" referencedTableName="role"/>
+    </changeSet>
+
+    <changeSet id="7" author="Filip">
+      <createTable tableName="verification_token">
+        <column name="id" type="BINARY(16)">
+          <constraints nullable="false" primaryKey="true"/>
+        </column>
+        <column name="application_user_id" type="BINARY(16)">
+          <constraints nullable="false"/>
+        </column>
+        <column name="expiry_date" type="timestamp without time zone">
+          <constraints nullable="false"/>
+        </column>
+      </createTable>
+      <addForeignKeyConstraint baseColumnNames="application_user_id" baseTableName="verification_token" constraintName="verification_token_application_user"  referencedColumnNames="id" referencedTableName="application_user"/>
+    </changeSet>
+</databaseChangeLog>

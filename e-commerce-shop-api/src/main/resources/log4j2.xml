@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="FATAL" name="ECommerceAPI"   packages="">
+  <Appenders>
+    <RollingFile name="root" fileName="./logs/ECommerceAPI.log"
+                 filePattern="./logs/ECommerceAPI_$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+      <PatternLayout>
+        <Pattern>%d[{dd-MMM HH:mm:ss,SSS}] %X{X_PS_REQUEST_ID} [%5] [%10] [%50] %X{dd.trace_id:-0} %X{dd.span_id:-0} - %m%n</Pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy />
+        <SizeBasedTriggeringPolicy size="250 MB" />
+      </Policies>
+    </RollingFile>
+    <Console name="STDOUT" target="SYSTEM_OUT">
+      <PatternLayout>
+        <Pattern>[%d{dd-MMM HH:mm:ss,SSS}] [%p] [%thread] (%-40logger{36}) - %m%n</Pattern>
+      </PatternLayout>
+    </Console>
+  </Appenders>
+  <Loggers>
+    <Root level="info">
+      <AppenderRef ref="root"/>
+      <AppenderRef ref="STDOUT"/>
+    </Root>
+  </Loggers>
+</Configuration>
