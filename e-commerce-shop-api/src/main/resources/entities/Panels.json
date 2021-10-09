@@ -1,0 +1,22 @@
+[
+  {
+    "name": "twisted nematic",
+    "tag": "TN"
+  },
+  {
+    "name": "in-plane switching",
+    "tag": "IPS"
+  },
+  {
+    "name": "vertical alignment",
+    "tag": "VA"
+  },
+  {
+    "name": "Active Matrix Organic Light Emitting Diode",
+    "tag": "AMOLED"
+  },
+  {
+    "name": "organic light emitting diode",
+    "tag": "OLED"
+  }
+]
