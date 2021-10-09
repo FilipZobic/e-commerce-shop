@@ -16,7 +16,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.zobic.ecommerceshopapi.service.UserDetailServiceImplementation;
 
 
@@ -24,8 +23,6 @@ import org.zobic.ecommerceshopapi.service.UserDetailServiceImplementation;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-  private UserAuthenticationEntryPoint userAuthenticationEntryPoint;
 
   private UserDetailServiceImplementation userDetailServiceImplementation;
 
