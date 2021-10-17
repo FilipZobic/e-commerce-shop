@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserDataService} from "../../services/user-data.service";
-import {AuthenticationService} from "../../services/authentication.service";
+import {Router} from "@angular/router";
+import {LocalHostService} from "../../services/local-host.service";
 
 @Component({
   selector: 'app-home',
@@ -8,27 +9,33 @@ import {AuthenticationService} from "../../services/authentication.service";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  displayProfileName: string = "";
+  headerDisplay: string = "Home";
+  activeButton: string = "HOME";
 
-  constructor(public userDataService: UserDataService, public authenticationService: AuthenticationService) { }
+  constructor(public userDataService: UserDataService, private router: Router, public localHostService: LocalHostService) { }
 
-  formatLabel(value: number) {
-    if (value >= 1000) {
-      return Math.round(value / 1000) + 'k';
-    }
-
-    return value;
-  }
 
   logoutEventHandler() {
-    const token = this.userDataService.getUser()?.accessToken;
-    if (token !== undefined) {
-      this.authenticationService.logout(token);
-    }
+    this.userDataService.logout();
   }
 
 
   ngOnInit(): void {
-
+    if (this.userDataService.displayProfileName != null) {
+      this.displayProfileName = this.userDataService.displayProfileName
+    }
   }
 
+  adminEventHandler(): void {
+    this.activeButton = "ADMIN"
+    this.headerDisplay = "Admin Console"
+    this.router.navigate(['/admin'])
+  }
+
+  homeEventHandler(): void {
+    this.activeButton = "HOME"
+    this.headerDisplay = "Home"
+    this.router.navigate(['/'])
+  }
 }

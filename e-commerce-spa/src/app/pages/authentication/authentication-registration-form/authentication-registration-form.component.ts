@@ -1,8 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ErrorStateMatcher} from "@angular/material/core";
 import {FormControl, FormGroup, FormGroupDirective, NgForm} from "@angular/forms";
 import {Country} from "../../../model/country";
-import {CountryService} from "../../../services/country.service";
 import {RegistrationDto} from "../../../model/dto/registration-dto";
 import {InputValidationService} from "../../../services/input-validation.service";
 
@@ -20,12 +19,13 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class AuthenticationRegistrationFormComponent {
   form: FormGroup = new FormGroup({});
+  @Input()
   countries: Country[] = [{alpha2Code: "RS", name: "Serbia"}];
   hide = true;
   @Output()
   submitLoginEmitter: EventEmitter<RegistrationDto> = new EventEmitter<RegistrationDto>();
 
-  constructor(private countryService: CountryService, private inputValidationService: InputValidationService) {
+  constructor(private inputValidationService: InputValidationService) {
     this.form.addControl('password', new FormControl(null));
     this.form.addControl('confirmPassword', new FormControl(null));
     this.form.addControl('email', new FormControl(null));
@@ -34,9 +34,6 @@ export class AuthenticationRegistrationFormComponent {
     this.form.addControl('address', new FormControl(null));
     this.form.addControl('city', new FormControl(null));
     this.form.addControl('zipCode', new FormControl(null));
-    this.countryService.itemsSubject.subscribe(newCountries => {
-      this.countries = newCountries;
-    })
     this.form.controls.email.addAsyncValidators(inputValidationService.validateUsernameNotTaken.bind(inputValidationService))
     // @ts-ignore
     this.form.addValidators(inputValidationService.passwordMatchValidator("password", "confirmPassword"));

@@ -24,7 +24,15 @@ export class TextInputComponent implements OnInit {
   isRequired = false;
 
   @Input()
-  pattern: null|string = null;
+  pattern: string = '';
+
+  @Input()
+  valueIsTakenMessage: string = '';
+
+  @Input()
+  valueIsTakenMessageCapital: string = '';
+
+
 
   constructor() { }
 

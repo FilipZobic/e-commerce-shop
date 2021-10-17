@@ -10,14 +10,16 @@ import {RegistrationDto} from "../../../model/dto/registration-dto";
   templateUrl: './base-authentication-box-form.component.html',
   styleUrls: ['./base-authentication-box-form.component.scss']
 })
-export class BaseAuthenticationBoxFormComponent {
+export class BaseAuthenticationBoxFormComponent implements OnInit{
   LOGIN = 'login';
   REGISTRATION = 'registration';
-  active = this.REGISTRATION;
-  readonly countries: Country[] = [];
+  active = this.LOGIN;
+  countries: Country[] = [];
 
   constructor(private authenticationService: AuthenticationService, private countryService: CountryService) {
-    this.countries = this.countryService.countries;
+    this.countryService.itemsSubject.subscribe(newCountries => {
+      this.countries = newCountries;
+    })
   }
 
   switchToRegistration(): void {
@@ -33,6 +35,11 @@ export class BaseAuthenticationBoxFormComponent {
   }
 
   handleRegistrationSubmit(userRegistrationDto: RegistrationDto) {
-    console.log(userRegistrationDto)
+    this.authenticationService.attemptRegistration(userRegistrationDto);
   }
+
+  ngOnInit(): void {
+  }
+
+
 }

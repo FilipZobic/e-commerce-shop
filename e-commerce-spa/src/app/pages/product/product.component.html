@@ -1,0 +1,171 @@
+<div class="padding-main">
+  <app-laptop-search-form [manufacturers]="manufacturers"></app-laptop-search-form>
+  <div class="card-container">
+    <!--  <mat-grid-list class="padding-main" cols="5" rowHeight="1:2" rowWidth="1:1">-->
+    <!--    <mat-grid-tile>-->
+    <mat-card  *ngFor="let laptop of laptops"  class="example-card card-item">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{laptop.name}}</mat-card-title>
+        <mat-card-subtitle>{{laptop.manufacturer.name}}</mat-card-subtitle>
+      </mat-card-header>
+      <img class="card-image" mat-card-image [src]="parseImage(laptop.image)" alt="Photo of a Shiba Inu">
+      <mat-card-content >
+        <p style="font-size: 22px;">Price: <strong><span style="color: red;">{{roundTo(laptop.price,2)}} $</span></strong></p>
+        <p style="font-size: 22px;">In-Stock: <strong><span>{{laptop.stock}}</span></strong></p>
+        <p>
+          Screen size: {{roundTo(laptop.diagonal, 2)}}" <br>
+          Panel type: {{laptop.panelType}} <br>
+          Ram: {{laptop.ram}} GB <br>
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>
+          <mat-icon>add_shopping_cart</mat-icon>
+          <span>ADD</span>
+        </button>
+        <button  mat-button>
+          <mat-icon matBadge="2" matBadgeColor="warn">remove_shopping_cart</mat-icon>
+          <span style="margin-left: 5px">REMOVE</span>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+    <!--    </mat-grid-tile>-->
+<!--    <mat-card class="example-card card-item">-->
+<!--      <mat-card-header>-->
+<!--        <div mat-card-avatar class="example-header-image"></div>-->
+<!--        <mat-card-title>Matebook</mat-card-title>-->
+<!--        <mat-card-subtitle>Huawei</mat-card-subtitle>-->
+<!--      </mat-card-header>-->
+<!--      <img class="card-image" mat-card-image src="https://img.gigatron.rs/img/products/large/image5f0d96322e678.png" alt="Photo of Huawei Matebook">-->
+<!--      <mat-card-content>-->
+<!--        <p style="font-size: 22px;">Price: <strong><span style="color: red;">199.999 ,00 $</span></strong></p>-->
+<!--        <p style="font-size: 22px;">In-Stock: <strong><span>23</span></strong></p>-->
+<!--        <p>-->
+<!--          Refresh rate: 144Hz <br>-->
+<!--          Screen size: 13" <br>-->
+<!--          Panel type: IPS <br>-->
+<!--          Ram: 16 GB <br>-->
+<!--        </p>-->
+<!--      </mat-card-content>-->
+<!--      <mat-card-actions>-->
+<!--        <button mat-button>-->
+<!--          <mat-icon>add_shopping_cart</mat-icon>-->
+<!--          <span>ADD</span>-->
+<!--        </button>-->
+<!--        <button [disabled]="!false" mat-button>-->
+<!--          <mat-icon *ngIf="false;else elseIcon" matBadge="2" matBadgeColor="warn">remove_shopping_cart</mat-icon>-->
+<!--          <ng-template #elseIcon>-->
+<!--            <mat-icon>remove_shopping_cart</mat-icon>-->
+<!--          </ng-template>-->
+<!--          <span style="margin-left: 5px">REMOVE</span>-->
+<!--        </button>-->
+<!--      </mat-card-actions>-->
+<!--    </mat-card>-->
+<!--    <mat-card class="example-card card-item">-->
+<!--      <mat-card-header>-->
+<!--        <div mat-card-avatar class="example-header-image"></div>-->
+<!--        <mat-card-title>Matebook</mat-card-title>-->
+<!--        <mat-card-subtitle>Huawei</mat-card-subtitle>-->
+<!--      </mat-card-header>-->
+<!--      <img class="card-image" mat-card-image src="https://img.gigatron.rs/img/products/large/image5f0d96322e678.png" alt="Photo of Huawei Matebook">-->
+<!--      <mat-card-content>-->
+<!--        <p style="font-size: 22px;">Price: <strong><span style="color: red;">199.999 ,00 $</span></strong></p>-->
+<!--        <p style="font-size: 22px;">In-Stock: <strong><span>23</span></strong></p>-->
+<!--        <p>-->
+<!--          Refresh rate: 144Hz <br>-->
+<!--          Screen size: 13" <br>-->
+<!--          Panel type: IPS <br>-->
+<!--          Ram: 16 GB <br>-->
+<!--        </p>-->
+<!--      </mat-card-content>-->
+<!--      <mat-card-actions>-->
+<!--        <button mat-button>-->
+<!--          <mat-icon>add_shopping_cart</mat-icon>-->
+<!--          <span>ADD</span>-->
+<!--        </button>-->
+<!--        <button [disabled]="!false" mat-button>-->
+<!--          <mat-icon *ngIf="false;else elseIcon" matBadge="2" matBadgeColor="warn">remove_shopping_cart</mat-icon>-->
+<!--          <ng-template #elseIcon>-->
+<!--            <mat-icon>remove_shopping_cart</mat-icon>-->
+<!--          </ng-template>-->
+<!--          <span style="margin-left: 5px">REMOVE</span>-->
+<!--        </button>-->
+<!--      </mat-card-actions>-->
+<!--    </mat-card>-->
+<!--    <mat-card class="example-card card-item">-->
+<!--      <mat-card-header>-->
+<!--        <div mat-card-avatar class="example-header-image"></div>-->
+<!--        <mat-card-title>Matebook</mat-card-title>-->
+<!--        <mat-card-subtitle>Huawei</mat-card-subtitle>-->
+<!--      </mat-card-header>-->
+<!--      <img class="card-image" mat-card-image src="https://img.gigatron.rs/img/products/large/image5f0d96322e678.png" alt="Photo of Huawei Matebook">-->
+<!--      <mat-card-content>-->
+<!--        <p style="font-size: 22px;">Price: <strong><span style="color: red;">199.999 ,00 $</span></strong></p>-->
+<!--        <p style="font-size: 22px;">In-Stock: <strong><span>23</span></strong></p>-->
+<!--        <p>-->
+<!--          Refresh rate: 144Hz <br>-->
+<!--          Screen size: 13" <br>-->
+<!--          Panel type: IPS <br>-->
+<!--          Ram: 16 GB <br>-->
+<!--        </p>-->
+<!--      </mat-card-content>-->
+<!--      <mat-card-actions>-->
+<!--        <button mat-button>-->
+<!--          <mat-icon>add_shopping_cart</mat-icon>-->
+<!--          <span>ADD</span>-->
+<!--        </button>-->
+<!--        <button [disabled]="!false" mat-button>-->
+<!--          <mat-icon *ngIf="false;else elseIcon" matBadge="2" matBadgeColor="warn">remove_shopping_cart</mat-icon>-->
+<!--          <ng-template #elseIcon>-->
+<!--            <mat-icon>remove_shopping_cart</mat-icon>-->
+<!--          </ng-template>-->
+<!--          <span style="margin-left: 5px">REMOVE</span>-->
+<!--        </button>-->
+<!--      </mat-card-actions>-->
+<!--    </mat-card>-->
+<!--    <mat-card class="example-card card-item">-->
+<!--      <mat-card-header>-->
+<!--        <div mat-card-avatar class="example-header-image"></div>-->
+<!--        <mat-card-title>Matebook</mat-card-title>-->
+<!--        <mat-card-subtitle>Huawei</mat-card-subtitle>-->
+<!--      </mat-card-header>-->
+<!--      <img class="card-image" mat-card-image src="https://img.gigatron.rs/img/products/large/image5f0d96322e678.png" alt="Photo of Huawei Matebook">-->
+<!--      <mat-card-content>-->
+<!--        <p style="font-size: 22px;">Price: <strong><span style="color: red;">199.999 ,00 $</span></strong></p>-->
+<!--        <p style="font-size: 22px;">In-Stock: <strong><span>23</span></strong></p>-->
+<!--        <p>-->
+<!--          Refresh rate: 144Hz <br>-->
+<!--          Screen size: 13" <br>-->
+<!--          Panel type: IPS <br>-->
+<!--          Ram: 16 GB <br>-->
+<!--        </p>-->
+<!--      </mat-card-content>-->
+<!--      <mat-card-actions>-->
+<!--        <button mat-button>-->
+<!--          <mat-icon>add_shopping_cart</mat-icon>-->
+<!--          <span>ADD</span>-->
+<!--        </button>-->
+<!--        <button [disabled]="!false" mat-button>-->
+<!--          <mat-icon *ngIf="false;else elseIcon" matBadge="2" matBadgeColor="warn">remove_shopping_cart</mat-icon>-->
+<!--          <ng-template #elseIcon>-->
+<!--            <mat-icon>remove_shopping_cart</mat-icon>-->
+<!--          </ng-template>-->
+<!--          <span style="margin-left: 5px">REMOVE</span>-->
+<!--        </button>-->
+<!--      </mat-card-actions>-->
+<!--    </mat-card>-->
+
+    <!--    <mat-grid-tile rowHeight="" rowspan="1" colspan="5">-->
+    <!--      <mat-paginator style="height: 100px!important;" [length]="100"-->
+    <!--                     [pageSize]="10"-->
+    <!--                     [pageSizeOptions]="[10, 30, 50]"-->
+    <!--                     aria-label="Select page">-->
+    <!--      </mat-paginator>-->
+    <!--    </mat-grid-tile>-->
+    <!--  </mat-grid-list>-->
+  </div>
+  <app-primary-paginator></app-primary-paginator>
+  <div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+
+// FORM
+
+#formContainer {
+  display: block;
+  width: 600px;
+  margin: 100px auto 100px auto;
+  padding: 20px;
+  border-radius: 8px;
+  //box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+}
+
+form {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-form-field {
+  width: 300px;
+}
+
+#submit {
+  font-size: 20px;
+  padding: 5px 10px;
+  width: 150px;
+  font-weight: bold;
+  text-transform: uppercase;
+}

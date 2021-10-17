@@ -8,5 +8,8 @@
     <mat-error *ngIf="this.formGroup.controls[formControlNameInput].hasError('pattern');">
       {{errorName}} does not match <strong>{{pattern}}</strong>
     </mat-error>
+    <mat-error *ngIf="this.formGroup.controls[formControlNameInput].hasError('valueIsTaken')" >
+      {{valueIsTakenMessage}}<strong>{{valueIsTakenMessageCapital}}</strong>
+    </mat-error>
   </mat-form-field>
 </div>

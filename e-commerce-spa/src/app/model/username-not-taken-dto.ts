@@ -1,3 +1,4 @@
 export interface UsernameNotTakenDto {
-  isEmailTaken: boolean
+  isEmailTaken: boolean,
+  isManufacturerNameTaken: boolean
 }

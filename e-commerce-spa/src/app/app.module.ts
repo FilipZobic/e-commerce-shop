@@ -32,6 +32,24 @@ import { RenderIfRoleDirective } from './directives/render-if-role.directive';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { TextInputComponent } from './components/input/text-input/text-input.component';
 import { CountrySelectComponent } from './components/input/country-select/country-select.component';
+import { HeaderComponent } from './pages/home/header/header.component';
+import { NavigationBarComponent } from './pages/home/navigation-bar/navigation-bar.component';
+import { ProductComponent } from './pages/product/product.component';
+import { AdminComponent } from './pages/admin/admin.component';
+import { OrderComponent } from './pages/order/order.component';
+import { TransactionComponent } from './pages/transaction/transaction.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { LaptopSearchFormComponent } from './components/laptop-search-form/laptop-search-form.component';
+import { PrimaryPaginatorComponent } from './components/primary-paginator/primary-paginator.component';
+import {MatListModule} from "@angular/material/list";
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatTableModule} from "@angular/material/table";
+import {UsersTabComponent} from "./pages/admin/users-tab/users-tab.component";
+import { ManufacturerTabComponent } from './pages/admin/manufacturer-tab/manufacturer-tab.component';
+import { ManufacturerTabUpdateFormComponent } from './pages/admin/manufacturer-tab/manufacturer-tab-update-form/manufacturer-tab-update-form.component';
+import { ManufacturerTabCreateFormComponent } from './pages/admin/manufacturer-tab/manufacturer-tab-create-form/manufacturer-tab-create-form.component';
+import { ManufacturerTabTableComponent } from './pages/admin/manufacturer-tab/manufacturer-tab-table/manufacturer-tab-table.component';
+import { LaptopTabComponent } from './pages/admin/laptop-tab/laptop-tab.component';
 
 @NgModule({
   declarations: [
@@ -45,30 +63,48 @@ import { CountrySelectComponent } from './components/input/country-select/countr
     HomeComponent,
     RenderIfRoleDirective,
     TextInputComponent,
-    CountrySelectComponent
+    CountrySelectComponent,
+    HeaderComponent,
+    NavigationBarComponent,
+    ProductComponent,
+    AdminComponent,
+    OrderComponent,
+    TransactionComponent,
+    ProfileComponent,
+    LaptopSearchFormComponent,
+    PrimaryPaginatorComponent,
+    UsersTabComponent,
+    ManufacturerTabComponent,
+    ManufacturerTabUpdateFormComponent,
+    ManufacturerTabCreateFormComponent,
+    ManufacturerTabTableComponent,
+    LaptopTabComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatOptionModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        MatCardModule,
-        MatToolbarModule,
-        MatMenuModule,
-        MatSidenavModule,
-        MatGridListModule,
-        MatPaginatorModule,
-        MatBadgeModule,
-        MatSliderModule,
-        MatCheckboxModule,
-        HttpClientModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatOptionModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatGridListModule,
+    MatPaginatorModule,
+    MatBadgeModule,
+    MatSliderModule,
+    MatCheckboxModule,
+    HttpClientModule,
+    MatListModule,
+    MatTabsModule,
+    MatTableModule
+  ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })

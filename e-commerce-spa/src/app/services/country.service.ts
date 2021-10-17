@@ -20,7 +20,6 @@ export class CountryService {
     this.uri = resource.baseUri + "countries";
     console.log("FETCHING COUNTRIES")
     this.fetchAllCountries().subscribe(countries=> {
-      console.log(countries)
       this.countries = countries;
       this.itemsSubject.next(countries);
     })
