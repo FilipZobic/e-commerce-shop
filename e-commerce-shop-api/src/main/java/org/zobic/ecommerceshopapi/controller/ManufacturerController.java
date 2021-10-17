@@ -5,15 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.zobic.ecommerceshopapi.dto.ManufacturerDto;
+import org.zobic.ecommerceshopapi.dto.ManufacturerValidationDto;
 import org.zobic.ecommerceshopapi.exception.EntityHasRelationShipsException;
 import org.zobic.ecommerceshopapi.exception.ResourceNotFoundException;
 import org.zobic.ecommerceshopapi.model.Manufacturer;
 import org.zobic.ecommerceshopapi.service.ManufacturerService;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 public class ManufacturerController {
@@ -50,6 +49,15 @@ public class ManufacturerController {
       .name(m.getName())
       .numberOfProducts(m.getNumberOfProducts())
       .build(), HttpStatus.OK);
+  }
+
+  @PreAuthorize("hasRole('ROLE_USER')")
+  @PostMapping("api/manufacturers/isNameTaken")
+  public ResponseEntity<Map<String, Object>> isNameTaken(@Valid @RequestBody ManufacturerValidationDto manufacturerDto) {
+    Optional<Manufacturer> manufacturer = this.service.findManufacturerByName(manufacturerDto.getName());
+    Map<String, Object> response = new HashMap<>();
+    response.put("isManufacturerNameTaken", manufacturer.isPresent());
+    return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")

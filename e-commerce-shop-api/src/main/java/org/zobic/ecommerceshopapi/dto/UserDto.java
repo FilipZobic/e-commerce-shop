@@ -8,6 +8,7 @@ import org.zobic.ecommerceshopapi.util.ValidationPatterns;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -41,6 +42,7 @@ public class UserDto {
   private String role;
 
   @Valid
+  @NotNull
   @JsonProperty("address")
   private AddressDto address;
 

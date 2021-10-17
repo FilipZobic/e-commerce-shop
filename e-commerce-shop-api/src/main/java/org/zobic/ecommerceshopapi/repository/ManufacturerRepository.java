@@ -15,4 +15,6 @@ public interface ManufacturerRepository {
   void delete(UUID id);
 
   Optional<Manufacturer> findById(UUID id);
+
+  Optional<Manufacturer> findManufacturerByName(String name);
 }

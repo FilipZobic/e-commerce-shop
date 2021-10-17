@@ -40,6 +40,9 @@ public class AuthenticationController {
 
   private SessionService sessionService;
 
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+
   public AuthenticationController(UserService userService, UtilitySecurity utilitySecurity, ApplicationEventPublisher eventPublisher, SessionService sessionService) {
     this.userService = userService;
     this.utilitySecurity = utilitySecurity;
@@ -56,21 +59,23 @@ public class AuthenticationController {
   }
 
   @PostMapping(path = "api/register")
-  public ResponseEntity<UserDto> register(@Valid @RequestBody UserDto userDto, HttpSession session, HttpServletRequest request) throws Exception {
+  public ResponseEntity<UserDto> register(@Valid @RequestBody UserDto userDto, HttpServletRequest request, HttpServletResponse response) throws Exception {
     User user = this.userService.registerUser(userDto);
     this.eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, request.getLocale(), request.getContextPath()));
     this.utilitySecurity.updateSecurityContext(user.getEmail());
+    response.setHeader(AuthenticationSessionFilter.X_ACCESS_TOKEN, sessionService.generateNewSession(user.getEmail(),user.getId()).getId());
     return new ResponseEntity<>(Utility.userToDto(user), HttpStatus.OK);
   }
 
   @PostMapping(path = "api/login")
   public ResponseEntity<?> login(@RequestBody CredentialsDto credentialsDto, HttpServletResponse response) {
     Optional<User> userOptional = this.userService.findUserByEmail(credentialsDto.getEmail());
-
     if (userOptional.isPresent()){
       User user = userOptional.get();
-      response.setHeader(AuthenticationSessionFilter.X_ACCESS_TOKEN, sessionService.generateNewSession(user.getEmail(),user.getId()).getId());
-      return new ResponseEntity<>(Utility.userToDto(userOptional.get()), HttpStatus.OK);
+      if (user.getPassword().equals(passwordEncoder.encode(credentialsDto.getPassword()))){
+        response.setHeader(AuthenticationSessionFilter.X_ACCESS_TOKEN, sessionService.generateNewSession(user.getEmail(),user.getId()).getId());
+        return new ResponseEntity<>(Utility.userToDto(userOptional.get()), HttpStatus.OK);
+      }
     }
 
     return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

@@ -19,7 +19,7 @@
         <constraints nullable="false" primaryKey="true"/>
       </column>
       <column name="name" type="VARCHAR(255)">
-        <constraints unique="true"/>
+        <constraints/>
       </column>
       <column name="manufacturer_id" type="BINARY(16)">
         <constraints nullable="false"/>
@@ -34,6 +34,12 @@
         <constraints nullable="false"/>
       </column>
       <column name="ram" type="VARCHAR(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="cover_image_path" type="TEXT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="stock" type="INTEGER">
         <constraints nullable="false"/>
       </column>
     </createTable>

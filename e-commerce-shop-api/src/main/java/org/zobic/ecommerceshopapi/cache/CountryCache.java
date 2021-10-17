@@ -4,7 +4,6 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.zobic.ecommerceshopapi.dto.CountryDto;
-import org.zobic.ecommerceshopapi.session.Session;
 
 import java.util.List;
 

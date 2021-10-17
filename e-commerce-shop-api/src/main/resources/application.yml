@@ -27,6 +27,12 @@ spring:
         max-idle: 8
         # Minimum free connections in connection pool default 0
         min-idle: 0
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 20MB
+      max-request-size: 20MB
 #  session:
 #    store-type: redis
   main.allow-bean-definition-overriding: true
@@ -42,16 +48,8 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db-scripts/liquibase-changelog-master.xml
-
-# Cookie configuration
-#server.servlet.session.cookie.http-only: true
-#server.servlet.session.cookie.secure: true
 link:
   value: http://localhost:8080
 mail:
   automatic:
     address: noreply@localhost.com
-
-#  spring.jpa.hibernate.ddl-auto=none
-#  spring.jpa.properties.hibernate.validator.apply_to_ddl=false
-#  spring.jpa.open-in-view=false

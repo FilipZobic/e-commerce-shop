@@ -30,4 +30,10 @@ public class Laptop extends GenericUuidModel {
 
   @Column(nullable = false)
   private Ram ram;
+
+  @Column(nullable = false)
+  private Integer stock;
+
+  @Column(nullable = false)
+  private String coverImagePath;
 }

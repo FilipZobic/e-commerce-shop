@@ -35,4 +35,9 @@ public class ManufacturerRepositoryImpl implements ManufacturerRepository{
   public void delete(UUID id) {
     repositoryPostgreSql.deleteById(id);
   }
+
+  @Override
+  public Optional<Manufacturer> findManufacturerByName(String name) {
+    return this.repositoryPostgreSql.findByName(name);
+  }
 }

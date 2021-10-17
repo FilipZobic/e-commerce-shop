@@ -2,6 +2,9 @@ package org.zobic.ecommerceshopapi.model;
 
 import lombok.Getter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum Ram {
   GB1(1),
   GB2(2),
@@ -20,5 +23,19 @@ public enum Ram {
 
   Ram(int size) {
     this.size = size;
+  }
+
+  private static final Map<Integer, Ram> map = new HashMap<>(values().length, 1);
+
+  static {
+    for (Ram r : values()) map.put(r.size, r);
+  }
+
+  public static Ram of(Integer value) {
+    Ram result = map.get(value);
+    if (result == null) {
+      throw new IllegalArgumentException("Invalid ram value: " + value);
+    }
+    return result;
   }
 }

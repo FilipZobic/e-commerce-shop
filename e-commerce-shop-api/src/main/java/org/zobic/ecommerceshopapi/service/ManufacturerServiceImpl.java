@@ -9,6 +9,7 @@ import org.zobic.ecommerceshopapi.model.Manufacturer;
 import org.zobic.ecommerceshopapi.repository.ManufacturerRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -53,5 +54,10 @@ public class ManufacturerServiceImpl implements ManufacturerService{
     Manufacturer manufacturer = manufacturerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Manufacturer with that id is not found"));
     manufacturer.setName(manufacturerDto.getName());
     return this.manufacturerRepository.save(manufacturer);
+  }
+
+  @Override
+  public Optional<Manufacturer> findManufacturerByName(String name) {
+    return this.manufacturerRepository.findManufacturerByName(name);
   }
 }
