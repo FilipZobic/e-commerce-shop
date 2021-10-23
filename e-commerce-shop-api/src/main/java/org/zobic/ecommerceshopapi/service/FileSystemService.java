@@ -9,9 +9,11 @@ import org.springframework.util.FileSystemUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -78,8 +80,15 @@ public class FileSystemService {
     }
   }
 
+  private String partSeparator = ",";
+
   public String saveFile(String base64, String fileName) throws IOException {
+
+    if (base64.contains(partSeparator)) {
+      base64 = base64.split(partSeparator)[1];
+    }
     byte[] fileBytes = Base64.getDecoder().decode(base64);
+
     InputStream targetStream = new ByteArrayInputStream(fileBytes);
 
     String mimeType = URLConnection.guessContentTypeFromStream(targetStream);
@@ -93,7 +102,6 @@ public class FileSystemService {
     }
 
     Path path = generateFilePath(fileName);
-    System.out.println(path.toString());
     Files.copy(targetStream, path);
     return fileName;
   }
@@ -112,7 +120,15 @@ public class FileSystemService {
     }
   }
 
+  public void deleteFile(Path path) throws IOException {
+    Files.delete(path);
+  }
+
   public Path generateFilePath(String fileName) {
     return this.ROOT_DIRECTORY.resolve(fileName);
+  }
+
+  public boolean compareNewAndOldImage(String newImageBase64, String oldImageBase64) {
+    return newImageBase64.equals(oldImageBase64);
   }
 }

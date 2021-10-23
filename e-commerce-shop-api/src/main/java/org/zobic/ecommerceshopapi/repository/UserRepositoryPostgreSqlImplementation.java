@@ -18,7 +18,7 @@ public class UserRepositoryPostgreSqlImplementation implements UserRepository {
   }
 
   @Override
-  public User registerUser(User user) {
+  public User saveUser(User user) {
     return this.userRepositoryPostgreSql.save(user);
   }
 

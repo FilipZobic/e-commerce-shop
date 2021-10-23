@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface UserRepository {
 
-  User registerUser(User user);
+  User saveUser(User user);
 
   User updateUser(User user, UUID id);
 

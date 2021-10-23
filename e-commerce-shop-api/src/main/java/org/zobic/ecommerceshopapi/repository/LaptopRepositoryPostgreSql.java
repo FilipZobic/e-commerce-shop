@@ -13,11 +13,14 @@ import java.util.UUID;
 public interface LaptopRepositoryPostgreSql extends JpaRepository <Laptop, UUID> {
 
   @Query("SELECT laptop FROM Laptop laptop WHERE " +
-    "(laptop.name LIKE :productName OR :productName IS NULL)" +
+    "(:productName IS NULL OR UPPER(laptop.name) LIKE %:productName% )" +
     "AND (laptop.price >= :minPrice OR :minPrice IS NULL)" +
     "AND (laptop.price <= :maxPrice OR :maxPrice IS NULL)" +
     "AND (laptop.manufacturer.id = :manufacturerId OR :manufacturerId IS NULL)" +
     "AND (laptop.stock > 0 OR laptop.stock IS NULL OR :shouldShowOutOfStock = true)"
   )
   Page<Laptop> findAllPaging(Pageable pageable, String productName, Double minPrice, Double maxPrice, UUID manufacturerId,Boolean shouldShowOutOfStock);
+
+  @Query("SELECT MAX(laptop.price) FROM Laptop laptop")
+  Integer findMaxPrice();
 }

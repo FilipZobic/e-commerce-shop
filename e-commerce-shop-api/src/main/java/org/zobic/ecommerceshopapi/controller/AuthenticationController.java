@@ -72,7 +72,8 @@ public class AuthenticationController {
     Optional<User> userOptional = this.userService.findUserByEmail(credentialsDto.getEmail());
     if (userOptional.isPresent()){
       User user = userOptional.get();
-      if (user.getPassword().equals(passwordEncoder.encode(credentialsDto.getPassword()))){
+
+      if (passwordEncoder.matches(credentialsDto.getPassword(), user.getPassword())){
         response.setHeader(AuthenticationSessionFilter.X_ACCESS_TOKEN, sessionService.generateNewSession(user.getEmail(),user.getId()).getId());
         return new ResponseEntity<>(Utility.userToDto(userOptional.get()), HttpStatus.OK);
       }

@@ -39,6 +39,9 @@ public class LaptopRepositoryImpl implements LaptopRepository{
 
   @Override
   public Page<Laptop> findAllPaging(Pageable pageable, String productNameOrId, Double minPrice, Double maxPrice, UUID manufacturerId, Boolean shouldShowOutOfStock) {
+    if (productNameOrId !=null ){
+    productNameOrId =  productNameOrId.toUpperCase();
+    }
     return this.repositoryPostgreSql.findAllPaging(pageable, productNameOrId, minPrice, maxPrice, manufacturerId, shouldShowOutOfStock);
   }
 }

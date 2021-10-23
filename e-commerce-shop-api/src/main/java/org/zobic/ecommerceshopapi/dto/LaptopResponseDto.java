@@ -26,4 +26,6 @@ public class LaptopResponseDto {
   private Integer ram;
 
   private Integer stock;
+
+  private boolean canDelete;
 }

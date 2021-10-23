@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import org.zobic.ecommerceshopapi.dto.CreateLaptopDto;
 import org.zobic.ecommerceshopapi.dto.LaptopResponseDto;
 import org.zobic.ecommerceshopapi.dto.ManufacturerDto;
+import org.zobic.ecommerceshopapi.dto.UpdateLaptopDto;
 import org.zobic.ecommerceshopapi.exception.FormatNotSupported;
 import org.zobic.ecommerceshopapi.exception.ResourceNotFoundException;
 import org.zobic.ecommerceshopapi.model.Laptop;
 import org.zobic.ecommerceshopapi.model.Manufacturer;
+import org.zobic.ecommerceshopapi.repository.LaptopRepository;
+import org.zobic.ecommerceshopapi.repository.LaptopRepositoryPostgreSql;
 import org.zobic.ecommerceshopapi.service.FileSystemService;
 import org.zobic.ecommerceshopapi.service.LaptopService;
 import org.zobic.ecommerceshopapi.util.UtilitySecurity;
@@ -25,6 +28,7 @@ import javax.validation.Valid;
 import java.io.*;
 import java.nio.file.Path;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.UUID;
 
 @RestController
@@ -35,6 +39,9 @@ public class LaptopController {
 
   @Autowired
   LaptopService laptopService;
+
+  @Autowired
+  LaptopRepositoryPostgreSql laptopRepositoryPostgreSql;
 
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @PostMapping("/api/products/laptops")
@@ -48,7 +55,39 @@ public class LaptopController {
       .ram(laptop.getRam().getSize())
       .panelType(laptop.getPanelType())
       .stock(laptop.getStock())
-      .id(manufacturer.getId())
+      .id(laptop.getId())
+      .manufacturer(ManufacturerDto.
+        builder()
+        .id(manufacturer.getId())
+        .name(manufacturer.getName())
+        .numberOfProducts(manufacturer.getNumberOfProducts() + 1)
+        .build())
+      .build();
+
+    return new ResponseEntity<>(laptopResponseDto, HttpStatus.OK);
+  }
+
+  @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+  @DeleteMapping("/api/products/laptops/{id}")
+  public ResponseEntity<?> deleteProduct(@PathVariable UUID id) {
+    this.laptopService.deleteLaptop(id);
+
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+  @PutMapping("/api/products/laptops/{id}")
+  public ResponseEntity<?> updateProduct(@Valid @RequestBody UpdateLaptopDto laptopDto, @PathVariable UUID id) throws IOException, FormatNotSupported, ResourceNotFoundException {
+    Laptop laptop = this.laptopService.updateLaptop(laptopDto, id);
+    Manufacturer manufacturer = laptop.getManufacturer();
+    LaptopResponseDto laptopResponseDto = LaptopResponseDto.builder()
+      .name(laptop.getName())
+      .diagonal(laptop.getDiagonal())
+      .price(laptop.getPrice())
+      .ram(laptop.getRam().getSize())
+      .panelType(laptop.getPanelType())
+      .stock(laptop.getStock())
+      .id(laptop.getId())
       .manufacturer(ManufacturerDto.
         builder()
         .id(manufacturer.getId())
@@ -86,7 +125,7 @@ public class LaptopController {
         .ram(laptop.getRam().getSize())
         .panelType(laptop.getPanelType())
         .stock(laptop.getStock())
-        .id(laptop.getManufacturer().getId())
+        .id(laptop.getId())
         .image((shouldReturnImage ? fileSystemService.getFile(Path.of(laptop.getCoverImagePath())) : null))
         .manufacturer(ManufacturerDto.
           builder()
@@ -96,8 +135,14 @@ public class LaptopController {
           .build())
         .build());
 
-
-    return new ResponseEntity<>(responseDtos, HttpStatus.OK);
+    Integer priceCeiling = laptopRepositoryPostgreSql.findMaxPrice();
+    if (priceCeiling == null) {
+      priceCeiling = 0;
+    }
+    HashMap<String, Object> response = new HashMap<>();
+    response.put("page", responseDtos);
+    response.put("priceCeiling", priceCeiling);
+    return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")

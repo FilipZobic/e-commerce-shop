@@ -2,11 +2,9 @@ package org.zobic.ecommerceshopapi.service;
 
 import org.hibernate.Filter;
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -61,8 +59,8 @@ public class UserServiceImplementation implements UserService {
     if (userDto.getAddress() != null) {
       address = this.addressService.save(userDto.getAddress());
     }
-    User newUser = new User(userDto.getFullName(), encryptedPassword, userDto.getEmail(), Arrays.asList(this.roleService.findByTitle("ROLE_ADMIN")), address, false);
-    return this.userRepository.registerUser(newUser);
+    User newUser = new User(userDto.getFullName(), encryptedPassword, userDto.getEmail(), Arrays.asList(this.roleService.findByTitle("ROLE_USER")), address, false);
+    return this.userRepository.saveUser(newUser);
   }
 
   @Transactional
@@ -93,7 +91,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     if (authentication.getName().equals(userToUpdate.getEmail()) && !isAdmin) {
-      User user = this.userRepository.registerUser(userToUpdate);
+      User user = this.userRepository.saveUser(userToUpdate);
       if (isUserSelfModify) {
         this.utilitySecurity.updateSecurityContext(user.getEmail());
       }
@@ -108,7 +106,7 @@ public class UserServiceImplementation implements UserService {
        if (userDto.getIsEnabled() != null) {
          userToUpdate.setEnabled(userDto.getIsEnabled());
        }
-        User user = this.userRepository.registerUser(userToUpdate);
+        User user = this.userRepository.saveUser(userToUpdate);
 
         if (isUserSelfModify) {
           this.utilitySecurity.updateSecurityContext(user.getEmail());
@@ -153,7 +151,7 @@ public class UserServiceImplementation implements UserService {
     }
     User newUser = new User(userDto.getFullName(), encryptedPassword, userDto.getEmail(), Arrays.asList(this.roleService.findByTitle(userDto.getRole())), address, enabled);
 
-    return this.userRepository.registerUser(newUser);
+    return this.userRepository.saveUser(newUser);
   }
 
   @Override
@@ -210,7 +208,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     user.setEnabled(true);
-    this.userRepository.registerUser(user);
+    this.userRepository.saveUser(user);
     this.verificationTokenRepository.delete(token);
   }
 }
