@@ -14,7 +14,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatCardModule} from "@angular/material/card";
 import { EmailInputComponent } from './components/input/email-input/email-input.component';
 import { PasswordInputComponent } from './components/input/password-input/password-input.component';
@@ -50,6 +50,13 @@ import { ManufacturerTabUpdateFormComponent } from './pages/admin/manufacturer-t
 import { ManufacturerTabCreateFormComponent } from './pages/admin/manufacturer-tab/manufacturer-tab-create-form/manufacturer-tab-create-form.component';
 import { ManufacturerTabTableComponent } from './pages/admin/manufacturer-tab/manufacturer-tab-table/manufacturer-tab-table.component';
 import { LaptopTabComponent } from './pages/admin/laptop-tab/laptop-tab.component';
+import {Ng5SliderModule} from "ng5-slider";
+import { FileDropDirective } from './directives/file-drop.directive';
+import { GenericselectComponent } from './components/input/genericselect/genericselect.component';
+import { NumberinputComponent } from './components/input/numberinput/numberinput.component';
+import { LaptopTabCreateFormComponent } from './pages/admin/laptop-tab/laptop-tab-create-form/laptop-tab-create-form.component';
+import { LaptopImageInputFieldComponent } from './pages/admin/laptop-tab/laptop-image-input-field/laptop-image-input-field.component';
+import { LaptopTabUpdateFormComponent } from './pages/admin/laptop-tab/laptop-tab-update-form/laptop-tab-update-form.component';
 
 @NgModule({
   declarations: [
@@ -78,33 +85,41 @@ import { LaptopTabComponent } from './pages/admin/laptop-tab/laptop-tab.componen
     ManufacturerTabUpdateFormComponent,
     ManufacturerTabCreateFormComponent,
     ManufacturerTabTableComponent,
-    LaptopTabComponent
+    LaptopTabComponent,
+    FileDropDirective,
+    GenericselectComponent,
+    NumberinputComponent,
+    LaptopTabCreateFormComponent,
+    LaptopImageInputFieldComponent,
+    LaptopTabUpdateFormComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatOptionModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatCardModule,
-    MatToolbarModule,
-    MatMenuModule,
-    MatSidenavModule,
-    MatGridListModule,
-    MatPaginatorModule,
-    MatBadgeModule,
-    MatSliderModule,
-    MatCheckboxModule,
-    HttpClientModule,
-    MatListModule,
-    MatTabsModule,
-    MatTableModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatOptionModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatCardModule,
+        MatToolbarModule,
+        MatMenuModule,
+        MatSidenavModule,
+        MatGridListModule,
+        MatPaginatorModule,
+        MatBadgeModule,
+        MatSliderModule,
+        MatCheckboxModule,
+        HttpClientModule,
+        MatListModule,
+        MatTabsModule,
+        MatTableModule,
+        Ng5SliderModule,
+        FormsModule
+    ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })

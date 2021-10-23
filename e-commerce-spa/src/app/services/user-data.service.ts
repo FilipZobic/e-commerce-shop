@@ -39,16 +39,17 @@ export class UserDataService  {
     this.user = userData;
     this.displayProfileName = UserDataUtil.generateName(userData)
     localStorage.setItem("e-commerce-website-user", JSON.stringify(this.user));
-    this.router.navigate(['/admin']) // remove this to /
+
+    if (this.user.grantedAuthorities.find(a => a === "ROLE_ADMIN")) {
+      this.router.navigate(['/admin'])
+    } else {
+      this.router.navigate(['/'])
+    }
 
     this.userService.fetchUserById(this.user.id).subscribe(userData => {
       console.log("Token Works");
       console.log(userData);
       })
-
-    this.userService.fetchAllUsers(this.user.id).subscribe(userData => {
-      userData.forEach((a) => console.log(a))
-    })
   }
 
   logout() {

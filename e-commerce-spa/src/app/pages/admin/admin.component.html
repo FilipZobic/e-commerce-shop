@@ -17,7 +17,11 @@
       <app-primary-paginator></app-primary-paginator>
     </ng-template>
   </mat-tab>
-  <mat-tab label="Products"></mat-tab>
+  <mat-tab (click)="setTab('PRODUCTS')" label="Products">
+    <ng-template [ngIf]="selectedTabIndex === 1">
+      <app-laptop-tab></app-laptop-tab>
+    </ng-template>
+  </mat-tab>
   <mat-tab (click)="setTab('MANUFACTURER')" label="Manufacturers">
     <ng-template [ngIf]="selectedTabIndex === 2">
       <app-manufacturer-tab></app-manufacturer-tab>

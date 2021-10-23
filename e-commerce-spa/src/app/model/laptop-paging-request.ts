@@ -1,10 +1,7 @@
-export interface LaptopPagingRequest {
-  manufacturerId: string|null
-  productName: string|null
-  minPrice: number|null
-  maxPrice: number|null
+import {LaptopPaginationSearchFormDto} from "./search/laptop-pagination-search-form-dto";
+import {LaptopSearchFormDto} from "./search/laptop-search-form-dto";
+
+export interface LaptopPagingRequest extends LaptopPaginationSearchFormDto, LaptopSearchFormDto{
   sortByProperty: string|null
   shouldReturnImage: boolean|null
-  size: number|null
-  page: number|null
 }

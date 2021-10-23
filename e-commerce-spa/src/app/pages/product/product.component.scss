@@ -48,3 +48,16 @@
 .padding-main {
   padding: 0 50px !important;
 }
+
+
+// Paginator
+
+.pagination-container {
+  display: block;
+  margin-top: 30px;
+  width: 100%;
+  @media screen and (max-width: 858px) {
+    width: 400px !important;
+    margin: 30px auto 0 auto;
+  }
+}
