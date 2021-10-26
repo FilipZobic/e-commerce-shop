@@ -44,9 +44,13 @@ export class AuthenticationRegistrationFormComponent {
   onSubmit() {
     if (this.form.valid) {
       const dto: RegistrationDto = {
+        id: null,
         password: this.form.value.password,
         email: this.form.value.email,
         fullName: this.form.value.fullName,
+        isEnabled: null,
+        isDeleted: null,
+        role: null,
         address: {
           addressValue: this.form.value.address,
           cityName: this.form.value.city,

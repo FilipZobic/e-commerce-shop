@@ -1,0 +1,56 @@
+.example-section {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin-bottom: 30px;
+}
+
+form {
+  margin-top: 30px;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-form-field {
+  width: 300px;
+}
+
+#submit {
+  font-size: 20px;
+  padding: 10px 30px;
+  width: 300px;
+  font-weight: bold;
+}
+
+#box-container {
+  display: block;
+  width: 600px;
+  margin: 100px auto 40px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+}
+
+#box-container-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+
+mat-card {
+  border-radius: 20px;
+}
+
+mat-checkbox {
+}
+
+::ng-deep .mat-checkbox .mat-checkbox-inner-container {
+  width: 20px;
+  height: 20px;
+}

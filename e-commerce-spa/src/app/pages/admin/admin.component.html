@@ -14,7 +14,6 @@
   <mat-tab (click)="setTab('USER')" label="Users">
     <ng-template [ngIf]="selectedTabIndex === 0">
       <app-users-tab></app-users-tab>
-      <app-primary-paginator></app-primary-paginator>
     </ng-template>
   </mat-tab>
   <mat-tab (click)="setTab('PRODUCTS')" label="Products">
@@ -27,8 +26,8 @@
       <app-manufacturer-tab></app-manufacturer-tab>
     </ng-template>
   </mat-tab>>
-  <mat-tab label="Orders"></mat-tab>
-  <mat-tab label="Transactions"></mat-tab>
-  <mat-tab label="Sessions"></mat-tab>
+<!--  <mat-tab label="Orders"></mat-tab>-->
+<!--  <mat-tab label="Transactions"></mat-tab>-->
+<!--  <mat-tab label="Sessions"></mat-tab>-->
 </mat-tab-group>
 

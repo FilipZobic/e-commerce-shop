@@ -16,7 +16,7 @@
           <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
             <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
               <ng-template [ngIf]="element === expandedElement">
-                <app-laptop-tab-update-form (onUpdateEmmiter)="onUpdateHandler($event)" [panelSelectDtos]="panelSelectDtos" [manufacturersSelectDtos]="manufacturersSelectDtos" [ramSelectDtos]="ramSelectDtos" [style.width.%]="100" [laptopInitialState]="element"></app-laptop-tab-update-form>
+                <app-laptop-tab-update-form (onDeleteEmitter)="onDeleteHandler($event)" (onUpdateEmmiter)="onUpdateHandler($event)" [panelSelectDtos]="panelSelectDtos" [manufacturersSelectDtos]="manufacturersSelectDtos" [ramSelectDtos]="ramSelectDtos" [style.width.%]="100" [laptopInitialState]="element"></app-laptop-tab-update-form>
               </ng-template>
             </div>
           </td>

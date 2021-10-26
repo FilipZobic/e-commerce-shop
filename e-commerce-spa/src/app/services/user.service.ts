@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {ResourceAPIService} from "./resource-api.service";
-import {UserDataService} from "./user-data.service";
 import {UserData} from "../model/user-data";
 import {Observable} from "rxjs";
+import {RegistrationDto} from "../model/dto/registration-dto";
+import {UserPage} from "../model/user-page";
+import {UserPagingRequest} from "../model/user-paging-request";
 
 @Injectable({
   providedIn: 'root'
@@ -28,17 +30,16 @@ export class UserService {
     return this.httpClient.get<UserData>(this.uri + "/" + id, {headers: headers});
   }
 
-  public fetchAllUsers(id: string): Observable<UserData[]> {
-    return this.httpClient.get<UserData[]>(this.uri);
+  public fetchAllUsers(paramsToChange: UserPagingRequest): Observable<UserPage> {
+    let params = Object.keys(paramsToChange)
+      // @ts-ignore
+      .filter((k) => paramsToChange[k] != null && paramsToChange[k].length !== 0)
+      // @ts-ignore
+      .reduce((a, k) => ({ ...a, [k]: paramsToChange[k] }), {});
+    // @ts-ignore
+    return this.httpClient.get<UserPage>(this.uri, {params});
   }
 
-  // disableAUser
-  //
-  // updateUser
-  //
-  // createNewUser
-  //
-  // fetchAllUserPaging
   logout(accessToken: any) {
     this.httpClient.delete<HttpResponse<any>>(this.logoutUrl,
       {
@@ -47,5 +48,13 @@ export class UserService {
         withCredentials:  true
       }
     ).subscribe()
+  }
+
+  postUser(body: RegistrationDto) {
+    return this.httpClient.post<HttpResponse<UserData>>(this.uri , body, {observe: 'response'});
+  }
+
+  putUser(body: RegistrationDto) {
+    return this.httpClient.put<HttpResponse<UserData>>(this.uri + `/${body.id}` , body, {observe: 'response'});
   }
 }

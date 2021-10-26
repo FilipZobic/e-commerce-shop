@@ -17,6 +17,9 @@ export class LaptopTabUpdateFormComponent implements OnInit {
   @Output()
   onUpdateEmmiter = new EventEmitter<Laptop>()
 
+  @Output()
+  onDeleteEmitter = new EventEmitter<string>()
+
   @Input()
     // @ts-ignore
   laptopInitialState: Laptop;
@@ -74,5 +77,9 @@ export class LaptopTabUpdateFormComponent implements OnInit {
 
   handleImage(file: string): void {
     this.image = file;
+  }
+
+  onDelete() {
+    this.onDeleteEmitter.emit(this.laptopInitialState.id)
   }
 }

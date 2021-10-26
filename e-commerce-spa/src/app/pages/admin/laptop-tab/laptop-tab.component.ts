@@ -8,7 +8,7 @@ import {Manufacturer} from "../../../model/manufacturer";
 import {ManufacturerService} from "../../../services/manufacturer.service";
 import {PageResponseLaptop} from "../../../model/dto/page-response-laptop";
 import {LaptopSearchFormDto} from "../../../model/search/laptop-search-form-dto";
-import {LaptopPaginationSearchFormDto} from "../../../model/search/laptop-pagination-search-form-dto";
+import {PaginationFormData} from "../../../model/search/pagination-form-data";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {SelectDto} from "../../../model/select-dto";
 import {capitalize} from "lodash";
@@ -109,7 +109,7 @@ export class LaptopTabComponent implements OnInit {
     console.log(this.pagingRequest)
     this.fetchLaptopsAgain()
   }
-  updatePaginationSearchValue($event: LaptopPaginationSearchFormDto) {
+  updatePaginationSearchValue($event: PaginationFormData) {
     this.pagingRequest = {...this.pagingRequest, ...$event}
     console.log(this.pagingRequest)
     this.fetchLaptopsAgain()
@@ -125,11 +125,21 @@ export class LaptopTabComponent implements OnInit {
       this.numberOfLaptops = next.page.totalElements
       this.refreshUi(next);
     }, error => {}, ()=> {
-
+      // this.manufacturerService.fetchAllManufacturers().subscribe(next => {
+      //   this.manufacturers = next;
+      //   this.manufacturersSelectDtos = this.manufacturers.map(m => {return {value: m.id, display: `${m.name} (${m.numberOfProducts})`}})
+      // })
     })
   }
 
   onPaginationChange() {
 
+  }
+
+  onDeleteHandler(id: string) {
+    this.laptopService.deleteProduct(id).subscribe(next => {
+    }, error => {}, ()=> {
+      this.fetchLaptopsAgain();
+    })
   }
 }

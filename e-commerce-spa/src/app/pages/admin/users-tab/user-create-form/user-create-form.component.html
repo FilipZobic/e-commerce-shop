@@ -1,0 +1,21 @@
+<div id="box-container" [class.mat-elevation-z8]="true">
+  <div id="box-container-inner">
+    <form [formGroup]="form" action="">
+      <app-email-input [formGroup]="form"></app-email-input>
+      <app-text-input [formGroup]="form" [errorName]="'Full name'" [label]="'Full name'" [formControlNameInput]="'fullName'" [isRequired]="true"></app-text-input>
+      <app-password-input [formGroup]="form" [formControlNameInput]="'password'"></app-password-input>
+      <app-country-select [formGroup]="form" [countries]="countries"></app-country-select>
+      <app-genericselect [formControlNameInput]="'role'" [formGroup]="form" [label]="'Role'" [selectDtos]="roleSelectDtos"></app-genericselect>
+      <app-text-input [formGroup]="form" [errorName]="'City'" [label]="'City'" [formControlNameInput]="'city'" [isRequired]="true"></app-text-input>
+      <app-text-input [formGroup]="form" [errorName]="'Address'" [label]="'Address'" [formControlNameInput]="'address'" [isRequired]="true"></app-text-input>
+      <app-text-input [pattern]="'^[0-9]{5}'" [formGroup]="form" [errorName]="'Zip code'" [label]="'Zip code'" [formControlNameInput]="'zipCode'" [isRequired]="true"></app-text-input>
+      <section class="example-section">
+        <mat-checkbox [formControlName]="'isDeleted'" style="margin-bottom: 20px; font-size: 18px;" color="warn" class="example-margin">Deleted</mat-checkbox>
+        <mat-checkbox [formControlName]="'isEnabled'"  style="font-size: 18px;" color="accent" class="example-margin">Enabled</mat-checkbox>
+      </section>
+      <div>
+        <button (click)="onSubmit()" [disabled]="!form.valid" id="submit" mat-raised-button color="primary">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

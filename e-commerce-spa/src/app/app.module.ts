@@ -57,6 +57,9 @@ import { NumberinputComponent } from './components/input/numberinput/numberinput
 import { LaptopTabCreateFormComponent } from './pages/admin/laptop-tab/laptop-tab-create-form/laptop-tab-create-form.component';
 import { LaptopImageInputFieldComponent } from './pages/admin/laptop-tab/laptop-image-input-field/laptop-image-input-field.component';
 import { LaptopTabUpdateFormComponent } from './pages/admin/laptop-tab/laptop-tab-update-form/laptop-tab-update-form.component';
+import { UserCreateFormComponent } from './pages/admin/users-tab/user-create-form/user-create-form.component';
+import { UserUpdateFormComponent } from './pages/admin/users-tab/user-update-form/user-update-form.component';
+import { UserSearchFormComponent } from './pages/admin/users-tab/user-search-form/user-search-form.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +94,10 @@ import { LaptopTabUpdateFormComponent } from './pages/admin/laptop-tab/laptop-ta
     NumberinputComponent,
     LaptopTabCreateFormComponent,
     LaptopImageInputFieldComponent,
-    LaptopTabUpdateFormComponent
+    LaptopTabUpdateFormComponent,
+    UserCreateFormComponent,
+    UserUpdateFormComponent,
+    UserSearchFormComponent
   ],
     imports: [
         BrowserModule,

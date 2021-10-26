@@ -1,3 +1,5 @@
+import {AddressDto} from "./dto/address-dto";
+
 export interface UserData {
   "id": string,
   "fullName": string,
@@ -5,5 +7,6 @@ export interface UserData {
   "isDeleted": boolean,
   "isEnabled": boolean,
   "grantedAuthorities": string[],
-  "accessToken": string
+  "accessToken": string,
+  "address": AddressDto
 }

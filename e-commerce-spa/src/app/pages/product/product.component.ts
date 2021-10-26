@@ -7,7 +7,7 @@ import {ManufacturerService} from "../../services/manufacturer.service";
 import {Manufacturer} from "../../model/manufacturer";
 import {PageResponseLaptop} from "../../model/dto/page-response-laptop";
 import {LaptopSearchFormDto} from "../../model/search/laptop-search-form-dto";
-import {LaptopPaginationSearchFormDto} from "../../model/search/laptop-pagination-search-form-dto";
+import {PaginationFormData} from "../../model/search/pagination-form-data";
 import {PageEvent} from "@angular/material/paginator";
 
 @Component({
@@ -66,7 +66,7 @@ export class ProductComponent implements OnInit {
     console.log(this.pagingRequest)
     this.fetchLaptopsAgain()
   }
-  updatePaginationSearchValue($event: LaptopPaginationSearchFormDto) {
+  updatePaginationSearchValue($event: PaginationFormData) {
     this.pagingRequest = {...this.pagingRequest, ...$event}
     console.log(this.pagingRequest)
     this.fetchLaptopsAgain()

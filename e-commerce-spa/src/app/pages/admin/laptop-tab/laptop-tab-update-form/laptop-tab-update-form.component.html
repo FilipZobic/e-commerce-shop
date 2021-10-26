@@ -23,7 +23,7 @@
     <div style="margin-bottom: 20px; display: flex; flex-direction: column">
       <button (click)="onSubmit()" [disabled]="(!form.valid || !form.dirty) && (image === null || image === laptopInitialState.image)" class="submit" mat-raised-button color="accent">Update</button>
       <button (click)="onReset()" [disabled]="(!form.valid || !form.dirty) && (image === null || image === laptopInitialState.image)" class="submit" mat-raised-button color="primary">Reset</button>
-      <button (click)="onSubmit()" [disabled]="false" class="submit" mat-raised-button color="warn">Delete</button>
+      <button (click)="onDelete()" [disabled]="false" class="submit" mat-raised-button color="warn">Delete</button>
     </div>
   </form>
 </div>

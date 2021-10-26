@@ -50,4 +50,8 @@ export class LaptopService {
   updateProduct(body: Laptop) {
     return this.httpClient.put<HttpResponse<Laptop>>(this.uri + `/${body.id}`, body, {observe: 'response'})
   }
+
+  deleteProduct(id: string) {
+    return this.httpClient.delete<HttpResponse<Laptop>>(this.uri + `/${id}`, {observe: 'response'})
+  }
 }
