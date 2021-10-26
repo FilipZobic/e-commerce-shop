@@ -1,5 +1,7 @@
 package org.zobic.ecommerceshopapi.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -8,15 +10,18 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.zobic.ecommerceshopapi.dto.UserDto;
 import org.zobic.ecommerceshopapi.dto.UserDtoUpdate;
+import org.zobic.ecommerceshopapi.exception.ResourceNotFoundException;
 import org.zobic.ecommerceshopapi.model.User;
+import org.zobic.ecommerceshopapi.repository.UserRepositoryPostgreSql;
+import org.zobic.ecommerceshopapi.service.RoleService;
 import org.zobic.ecommerceshopapi.service.UserService;
 import org.zobic.ecommerceshopapi.util.Utility;
 import org.zobic.ecommerceshopapi.util.UtilitySecurity;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @Validated
@@ -24,6 +29,12 @@ import java.util.UUID;
 public class UserController {
 
   private UserService userService;
+
+  @Autowired
+  private UserRepositoryPostgreSql userRepositoryPostgreSql;
+
+  @Autowired
+  RoleService roleService;
 
   public UserController(UserService userService) {
     this.userService = userService;
@@ -35,12 +46,21 @@ public class UserController {
   }
 
   @GetMapping
-  public ResponseEntity<?> getUsers() {
-    List<UserDto> userDtos = new ArrayList<>();
-    this.userService.findAllUsers().forEach(user -> {
-    userDtos.add(Utility.userToDto(user));
-    });
-    return new ResponseEntity<>(userDtos, HttpStatus.OK);
+  public ResponseEntity<?> getUsers(
+    @RequestParam(required = false)String email,
+    @RequestParam(required = false)String role,
+    @RequestParam(required = false, defaultValue = "email")String sortByProperty,
+    @RequestParam(required = false, defaultValue = "50") Integer size,
+    @RequestParam(required = false, defaultValue = "0") Integer page) throws ResourceNotFoundException {
+
+    Pageable pageable = PageRequest.of(page, size, Sort.by(sortByProperty));
+
+    if (email != null) {
+      email = email.toUpperCase();
+    }
+    Page<UserDto> dtos = this.userRepositoryPostgreSql.findAllByEmailLikeAndRoles_Title(email, role, pageable).map(Utility::userToDto);
+
+    return new ResponseEntity<>(dtos, HttpStatus.OK);
   }
 
   @GetMapping("/{id}")

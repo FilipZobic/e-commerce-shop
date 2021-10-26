@@ -10,6 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -49,6 +50,14 @@ public class User extends GenericUuidModel {
     inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
   )
   private Collection<Role> roles;
+//
+//  @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+//  @JoinTable(
+//    name = "cart",
+//    joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+//    inverseJoinColumns = @JoinColumn(name = "laptop_id", referencedColumnName = "id")
+//  )
+//  private List<Laptop> cart;
 
   @OneToOne(optional = true, cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "address_id")

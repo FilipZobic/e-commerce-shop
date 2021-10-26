@@ -68,21 +68,30 @@ public class UserServiceImplementation implements UserService {
   public User updateUser(UserDtoUpdate userDto, UUID id) throws Exception {
     User userToUpdate = this.findUserById(id);
 
+    Boolean deleted = null;
+    if (userDto.getIsDeleted() != null) {
+      deleted = userDto.getIsDeleted();
+    }
+
     UUID addressID = null;
     Address userToUpdateAddress = userToUpdate.getAddress();
     if (userToUpdateAddress != null) {
       addressID = userToUpdate.getId();
     }
 
+    boolean isAdmin = utilitySecurity.userHasAdminRole();
+
     AddressDto addressDto = userDto.getAddress();
-    if (addressDto != null) {
-      Address updatedAddress = this.addressService.update(addressID, addressDto, userToUpdateAddress);
+    if (addressDto != null && isAdmin) {
+      Address updatedAddress = this.addressService.update(addressID, addressDto, userToUpdateAddress, deleted);
+      userToUpdate.setAddress(updatedAddress);
+    } else if (addressDto != null) {
+      Address updatedAddress = this.addressService.update(addressID, addressDto, userToUpdateAddress, null);
       userToUpdate.setAddress(updatedAddress);
     }
 
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     boolean isUserSelfModify = userToUpdate.getEmail().equals(authentication.getName());
-    boolean isAdmin = utilitySecurity.userHasAdminRole();
 
     userToUpdate.setFullName(userDto.getFullName());
     userToUpdate.setEmail(userDto.getEmail());
@@ -101,6 +110,10 @@ public class UserServiceImplementation implements UserService {
 
        if (userDto.getRole() != null) {
          userToUpdate.setRoles(new ArrayList<>(Arrays.asList(this.roleService.findByTitle(userDto.getRole()))));
+       }
+
+       if (deleted != null) {
+         userToUpdate.setDeleted(deleted);
        }
 
        if (userDto.getIsEnabled() != null) {
@@ -141,16 +154,24 @@ public class UserServiceImplementation implements UserService {
     if (userDto.getRole() == null) {
       userDto.setRole("ROLE_USER");
     }
+
+    Boolean deleted = false;
+    if (userDto.getIsDeleted() != null) {
+      deleted = userDto.getIsDeleted();
+    }
+
     Address address = null;
     if (userDto.getAddress() != null) {
       address = this.addressService.save(userDto.getAddress());
+      address.setDeleted(deleted);
     }
     Boolean enabled = false;
     if (userDto.getIsEnabled() != null) {
       enabled = userDto.getIsEnabled();
     }
-    User newUser = new User(userDto.getFullName(), encryptedPassword, userDto.getEmail(), Arrays.asList(this.roleService.findByTitle(userDto.getRole())), address, enabled);
 
+    User newUser = new User(userDto.getFullName(), encryptedPassword, userDto.getEmail(), Arrays.asList(this.roleService.findByTitle(userDto.getRole())), address, enabled);
+    newUser.setDeleted(deleted);
     return this.userRepository.saveUser(newUser);
   }
 

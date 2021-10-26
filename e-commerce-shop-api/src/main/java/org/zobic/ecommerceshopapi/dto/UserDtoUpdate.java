@@ -26,7 +26,7 @@ public class UserDtoUpdate {
   private String fullName;
 
   @JsonDeserialize(using= WhiteSpaceRemovalDeserializer.class)
-  @Size(min = 10, message = "Password must contain at least 10 characters")
+  @Size(min = 6, message = "Password must contain at least 10 characters")
   @Pattern(regexp = ".*[0-9].*", message = "Password must contain at least one number")
   private String password;
 
@@ -42,4 +42,6 @@ public class UserDtoUpdate {
   private AddressDto address;
 
   private Boolean isEnabled;
+
+  private Boolean isDeleted;
 }

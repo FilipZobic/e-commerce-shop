@@ -43,7 +43,11 @@ public class AddressServiceImplementation implements AddressService{
 
     @Transactional
     @Override
-    public Address update(UUID addressId, AddressDto addressDto, Address address) throws Exception {
+    public Address update(UUID addressId, AddressDto addressDto, Address address, Boolean deleted) throws Exception {
+
+        if (deleted != null) {
+          address.setDeleted(deleted);
+        }
 
         if (addressDto == null) {
           throw new Exception("Address is null");
