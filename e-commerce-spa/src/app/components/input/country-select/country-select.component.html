@@ -1,0 +1,11 @@
+<div [formGroup]="formGroup">
+  <mat-form-field appearance="outline">
+    <mat-label>Select a Country</mat-label>
+    <mat-select [formControlName]="'country'">
+      <mat-option *ngFor="let c of countries;" [value]=c.alpha2Code >{{c.name}}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="this.formGroup.controls.country.hasError('required') && this.formGroup.controls.country.touched" >
+      Country is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+</div>

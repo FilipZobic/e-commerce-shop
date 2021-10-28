@@ -1,0 +1,15 @@
+<div [formGroup]="formGroup">
+  <mat-form-field appearance="outline">
+    <mat-label>{{label}}</mat-label>
+    <input matInput [formControlName]=formControlNameInput>
+    <mat-error *ngIf="this.formGroup.controls[formControlNameInput].hasError('required');">
+      {{errorName}} is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="this.formGroup.controls[formControlNameInput].hasError('pattern');">
+      {{errorName}} does not match <strong>{{pattern}}</strong>
+    </mat-error>
+    <mat-error *ngIf="this.formGroup.controls[formControlNameInput].hasError('valueIsTaken')" >
+      {{valueIsTakenMessage}}<strong>{{valueIsTakenMessageCapital}}</strong>
+    </mat-error>
+  </mat-form-field>
+</div>

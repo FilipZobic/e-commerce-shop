@@ -1,0 +1,11 @@
+<div [formGroup]="formGroup">
+  <mat-form-field appearance="outline">
+    <mat-label>Select a {{label}}</mat-label>
+    <mat-select [formControlName]="formControlNameInput">
+      <mat-option *ngFor="let d of selectDtos;" [value]=d.value >{{d.display}}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="this.formGroup.controls[formControlNameInput].hasError('required') && this.formGroup.controls[formControlNameInput].touched" >
+      {{label}} is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+</div>

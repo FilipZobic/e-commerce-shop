@@ -1,0 +1,24 @@
+<div style="width: 100%; display: flex; overflow: hidden">
+  <form style="display: flex; flex-direction: row" [formGroup]="form" action="">
+    <div style="margin: 0 20px 0 0;">
+      <mat-form-field appearance="outline">
+        <mat-label>ID</mat-label>
+        <input matInput value="{{manufacturer.id}}" [disabled]="true">
+      </mat-form-field>
+    </div>
+    <div style="margin: 0 20px 0 0;">
+      <mat-form-field appearance="outline">
+        <mat-label>Nu. Products</mat-label>
+        <input matInput value="{{manufacturer.numberOfProducts}}" [disabled]="true">
+      </mat-form-field>
+    </div>
+    <app-text-input [valueIsTakenMessage]="'Manufacturer already '" [valueIsTakenMessageCapital]="'exists'" [formGroup]="form" [errorName]="'Manufacturer Name'" [label]="'Manufacturer Name'" [formControlNameInput]="'name'" [isRequired]="true"></app-text-input>
+    <span class="example-spacer"></span>
+    <div>
+      <button  style="text-transform: uppercase" (click)="onSubmit()" [disabled]="!form.valid || !form.dirty" id="submit" mat-raised-button color="accent">Update</button>
+      <button (click)="onDelete(manufacturer.id)" [disabled]="manufacturer.numberOfProducts !== 0" style="margin: 0 0 0 20px;text-transform: uppercase" (click)="onSubmit()"  id="delete" mat-raised-button color="warn">Delete</button>
+    </div>
+    <div>
+    </div>
+  </form>
+</div>

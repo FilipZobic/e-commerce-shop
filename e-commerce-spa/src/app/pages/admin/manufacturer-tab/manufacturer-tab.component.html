@@ -1,0 +1,12 @@
+<mat-tab-group (selectedTabChange)="tabChange($event)">
+  <mat-tab label="All">
+    <ng-template [ngIf]="selectedTabIndex === 0">
+      <app-manufacturer-tab-table [manufacturers]="manufacturers"  (onDeleteEmitter)="deleteManufacturer($event)" (onUpdateEmitter)="updateManufacturer($event)"></app-manufacturer-tab-table>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Create">
+    <ng-template [ngIf]="selectedTabIndex === 1">
+      <app-manufacturer-tab-create-form (onCreateEmitter)="createManufacturer($event)"></app-manufacturer-tab-create-form>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,11 @@
+<div id="formContainer" [class.mat-elevation-z8]="true">
+  <h2 style="color: #3f51b5;">Create new Manufacturer</h2>
+  <form [formGroup]="form">
+    <div style="margin: 20px auto 20px auto">
+      <app-text-input [valueIsTakenMessage]="'Manufacturer already '" [valueIsTakenMessageCapital]="'exists'" [formGroup]="form" [errorName]="'Manufacturer Name'" [label]="'Manufacturer Name'" [formControlNameInput]="'name'" [isRequired]="true"></app-text-input>
+    </div>
+    <div >
+      <button  style="text-transform: uppercase" (click)="onSubmit()" [disabled]="!form.valid" id="submit" mat-raised-button color="accent">Submit</button>
+    </div>
+  </form>
+</div>

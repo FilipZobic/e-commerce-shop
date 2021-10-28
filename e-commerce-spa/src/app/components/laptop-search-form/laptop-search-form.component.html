@@ -1,0 +1,46 @@
+<div [class.mat-elevation-z4]="true" class="search-and-filter-container">
+  <h2>Search</h2>
+  <form [formGroup]="form">
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Manufacturer</mat-label>
+        <select [formControlName]="'manufacturerId'" matNativeControl>
+          <option value="">Select Manufacturer</option>
+          <option  *ngFor="let ma of manufacturers"  [value]="ma.id" >{{ma.name}} ({{ma.numberOfProducts}})</option>
+        </select>
+      </mat-form-field>
+    </div>
+    <app-text-input label="Product Name" [formGroup]="form" [formControlNameInput]="'productName'"></app-text-input>
+<!--    <div>-->
+<!--      <mat-form-field appearance="outline">-->
+<!--        <mat-label>Product name</mat-label>-->
+<!--        <input matInput>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+    <div>
+      <h3>Price</h3>
+      <div style="width: 300px">
+        <ng5-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options"></ng5-slider>
+      </div>
+<!--      <mat-slider-->
+<!--        thumbLabel-->
+<!--        [displayWith]="formatLabel"-->
+<!--        tickInterval="1000"-->
+<!--        step="1000"-->
+<!--        min="0"-->
+<!--        max="100000"-->
+<!--        aria-label="units"></mat-slider>-->
+    </div>
+    <div class="search-expanded">
+      <div>
+      </div>
+      <div class="search-main-buttons-container">
+        <button (click)="submit()" color="primary" mat-raised-button>
+          <mat-icon>search</mat-icon>
+          Search
+        </button>
+        <button color="primary" mat-raised-button (click)="clear()">Clear</button>
+      </div>
+    </div>
+  </form>
+</div>

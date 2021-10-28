@@ -1,0 +1,33 @@
+<!--<mat-drawer-container class="example-container">-->
+<!--  <mat-drawer mode="side">-->
+<!--    <a>Users</a>-->
+<!--    <a>Products</a>-->
+<!--    <a>Manufacturers</a>-->
+<!--    <a>Orders</a>-->
+<!--    <a>Transactions</a>-->
+<!--    <a>Sessions</a>-->
+<!--  </mat-drawer>-->
+<!--  <mat-drawer-content>Main content</mat-drawer-content>-->
+<!--</mat-drawer-container>-->
+
+<mat-tab-group (selectedTabChange)="tabChange($event)">
+  <mat-tab (click)="setTab('USER')" label="Users">
+    <ng-template [ngIf]="selectedTabIndex === 0">
+      <app-users-tab></app-users-tab>
+    </ng-template>
+  </mat-tab>
+  <mat-tab (click)="setTab('PRODUCTS')" label="Products">
+    <ng-template [ngIf]="selectedTabIndex === 1">
+      <app-laptop-tab></app-laptop-tab>
+    </ng-template>
+  </mat-tab>
+  <mat-tab (click)="setTab('MANUFACTURER')" label="Manufacturers">
+    <ng-template [ngIf]="selectedTabIndex === 2">
+      <app-manufacturer-tab></app-manufacturer-tab>
+    </ng-template>
+  </mat-tab>>
+<!--  <mat-tab label="Orders"></mat-tab>-->
+<!--  <mat-tab label="Transactions"></mat-tab>-->
+<!--  <mat-tab label="Sessions"></mat-tab>-->
+</mat-tab-group>
+

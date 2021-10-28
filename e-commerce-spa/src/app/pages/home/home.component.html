@@ -1,0 +1,16 @@
+<app-navigation-bar
+  (openDialogClickedEmitter)="cartHandler()"
+  [numberOfItemsInCart]="numberOfItemsInCart"
+  [activeButton]="activeButton"
+  (signOutButtonClickedEmitter)="logoutEventHandler()"
+  (adminButtonClickedEmitter)="adminEventHandler()"
+  (homeButtonClickedEmitter)="homeEventHandler()"
+  [displayProfileName]="displayProfileName"></app-navigation-bar>
+<app-header [headerDisplay]="headerDisplay"></app-header>
+<div id="page-container">
+  <span id="bottom-padding">
+<!--    <app-product></app-product>-->
+  <router-outlet ></router-outlet>
+  </span>
+  <footer id="footer"></footer>
+</div>
