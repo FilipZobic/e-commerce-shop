@@ -1,0 +1,55 @@
+spring:
+  # Database
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/e-commerce-shop-test
+    username: ${DB_POSTGRESQL_USERNAME}
+    password: ${DB_POSTGRESQL_PASSWORD}
+  # JPA properties
+  jpa:
+    hibernate:
+      ddl-auto: none # When you launch the application for the first time - switch "none" at "create"
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    generate-ddl: false
+  # Session storage
+  redis:
+    host: localhost
+    port: 6379
+    lettuce:
+      shutdown-timeout: 30000
+      pool:
+        # Connection pool maximum connections (negative for no limit) default 8
+        max-active: 30
+        # Maximum free connections in connection pool default 8
+        max-idle: 8
+        # Minimum free connections in connection pool default 0
+        min-idle: 0
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 20MB
+      max-request-size: 20MB
+#  session:
+#    store-type: redis
+  main.allow-bean-definition-overriding: true
+  jackson.default-property-inclusion: non_empty
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+  mail:
+    host: smtp.mailtrap.io
+    port: 2525
+    username: 35503ab9493f2f
+    password: 88736497a6d291
+  liquibase:
+    enabled: true
+    change-log: classpath:db-scripts/liquibase-changelog-master.xml
+link:
+  value: http://localhost:8080
+mail:
+  automatic:
+    address: noreply@localhost.com
