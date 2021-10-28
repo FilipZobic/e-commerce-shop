@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {UserData} from "../model/user-data";
+import {CartItem, UserData} from "../model/user-data";
 import {Router} from "@angular/router";
 import {UserDataUtil} from "../util/user-data-util";
 import {UserService} from "./user.service";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,7 @@ export class UserDataService  {
     this.accessToken = userData.accessToken
     this.user = userData;
     this.displayProfileName = UserDataUtil.generateName(userData)
+    this.updateCartSubject();
     localStorage.setItem("e-commerce-website-user", JSON.stringify(this.user));
 
     if (this.user.grantedAuthorities.find(a => a === "ROLE_ADMIN")) {
@@ -56,6 +58,17 @@ export class UserDataService  {
     if (this.accessToken !== undefined) {
       this.userService.logout(this.accessToken)
       this.setUser(null)
+    }
+  }
+
+  cartItems: BehaviorSubject<CartItem[]> = new BehaviorSubject<CartItem[]>([]);
+
+  updateCartSubject() {
+    let user = this.user;
+    if (user != null) {
+      this.userService.fetchUserById(user.id).subscribe(next => {
+        this.cartItems.next((next.cart ? next.cart : []));
+      })
     }
   }
 }

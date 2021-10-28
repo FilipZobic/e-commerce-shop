@@ -13,6 +13,9 @@ export class NavigationBarComponent implements OnInit {
   @Input()
   activeButton: string = "HOME";
 
+  @Input()
+  numberOfItemsInCart: number = 0
+
   @Output()
   signOutButtonClickedEmitter = new EventEmitter();
 
@@ -21,6 +24,9 @@ export class NavigationBarComponent implements OnInit {
 
   @Output()
   homeButtonClickedEmitter = new EventEmitter();
+
+  @Output()
+  openDialogClickedEmitter = new EventEmitter();
 
   constructor() { }
 

@@ -60,6 +60,7 @@ import { LaptopTabUpdateFormComponent } from './pages/admin/laptop-tab/laptop-ta
 import { UserCreateFormComponent } from './pages/admin/users-tab/user-create-form/user-create-form.component';
 import { UserUpdateFormComponent } from './pages/admin/users-tab/user-update-form/user-update-form.component';
 import { UserSearchFormComponent } from './pages/admin/users-tab/user-search-form/user-search-form.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { UserSearchFormComponent } from './pages/admin/users-tab/user-search-for
     LaptopTabUpdateFormComponent,
     UserCreateFormComponent,
     UserUpdateFormComponent,
-    UserSearchFormComponent
+    UserSearchFormComponent,
+    CartComponent
   ],
     imports: [
         BrowserModule,

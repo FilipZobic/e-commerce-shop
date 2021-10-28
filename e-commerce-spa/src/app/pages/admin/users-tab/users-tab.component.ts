@@ -12,6 +12,7 @@ import {LaptopSearchFormDto} from "../../../model/search/laptop-search-form-dto"
 import {LaptopPagingRequest} from "../../../model/laptop-paging-request";
 import {UserPagingRequest} from "../../../model/user-paging-request";
 import {UserSearchFormDto} from "../../../model/search/user-search-form-dto";
+import {UserDataService} from "../../../services/user-data.service";
 
 @Component({
   selector: 'app-users-tab',
@@ -32,6 +33,7 @@ export class UsersTabComponent implements OnInit {
   expandedElement: UserData | null | undefined;
   selectedTabIndex: number = 0;
   numberOfUsers: number = 0;
+  numberOfItemsInCart: number = 0;
   pagingRequest: UserPagingRequest = {
     sortByProperty: "email",
     page: 0,

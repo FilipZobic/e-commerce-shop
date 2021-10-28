@@ -20,14 +20,22 @@
         </p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button>
+        <button (click)="addLaptopToCart(laptop.id)" [disabled]="laptop.stock === 0 || laptop.stock <= getAmountInCart(laptop.id)" mat-button>
           <mat-icon>add_shopping_cart</mat-icon>
           <span>ADD</span>
         </button>
-        <button  mat-button>
-          <mat-icon matBadge="2" matBadgeColor="warn">remove_shopping_cart</mat-icon>
-          <span style="margin-left: 5px">REMOVE</span>
-        </button>
+        <ng-template [ngIf]="laptopIsInUserCartChecker(laptop.id)" [ngIfElse]="elseButton">
+          <button (click)="removeLaptopFromCart(laptop.id)" mat-button>
+            <mat-icon [matBadge]="getAmountInCart(laptop.id)" matBadgeColor="warn">remove_shopping_cart</mat-icon>
+            <span style="margin-left: 5px">REMOVE</span>
+          </button>
+        </ng-template>
+        <ng-template #elseButton>
+          <button [disabled]="true"  mat-button>
+            <mat-icon>remove_shopping_cart</mat-icon>
+            <span style="margin-left: 5px">REMOVE</span>
+          </button>
+        </ng-template>
       </mat-card-actions>
     </mat-card>
   </div>

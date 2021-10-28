@@ -9,6 +9,11 @@ import {PageResponseLaptop} from "../../model/dto/page-response-laptop";
 import {LaptopSearchFormDto} from "../../model/search/laptop-search-form-dto";
 import {PaginationFormData} from "../../model/search/pagination-form-data";
 import {PageEvent} from "@angular/material/paginator";
+import {CartService} from "../../services/cart.service";
+import {CartItem, UserData} from "../../model/user-data";
+import {UserDataService} from "../../services/user-data.service";
+import {BehaviorSubject} from "rxjs";
+import {Country} from "../../model/country";
 
 @Component({
   selector: 'app-product',
@@ -19,14 +24,26 @@ export class ProductComponent implements OnInit {
 
   laptops: Laptop[] = [];
   manufacturers: Manufacturer[] = []
+  itemsInCart: {id: string, amount: number}[] = []
 
-  constructor(private laptopService: LaptopService, private sanitization: DomSanitizer, private manufacturerService: ManufacturerService) { }
+  constructor(private laptopService: LaptopService, private sanitization: DomSanitizer, private manufacturerService: ManufacturerService, private cartService: CartService, private userDataService: UserDataService) { }
 
   ngOnInit(): void {
+    // this.cartService.getUserCartInfo(next => {
+    //
+    // })
     this.laptopService.fetchAllProducts(this.pagingRequest).subscribe(productPage => {
       this.laptops = productPage.page.content;
       this.numberOfLaptops = productPage.page.totalElements
       this.refreshUi(productPage);
+      const user = this.userDataService.getUser();
+      this.userDataService.cartItems.subscribe(items => {
+        this.itemsInCart = items.map<{id: string, amount: number}>(cartItem => {return {id: cartItem.id.laptopId, amount: cartItem.amount}})
+      })
+      // if (user != null) {
+      //   if (user.cart !== null) {
+      //   }
+      // }
     })
     this.manufacturerService.fetchAllManufacturers().subscribe(manufacturers => {
       this.manufacturers = manufacturers
@@ -63,12 +80,10 @@ export class ProductComponent implements OnInit {
 
   updateFormSearchValue($event: LaptopSearchFormDto) {
     this.pagingRequest = {...this.pagingRequest, ...$event, page: 0}
-    console.log(this.pagingRequest)
     this.fetchLaptopsAgain()
   }
   updatePaginationSearchValue($event: PaginationFormData) {
     this.pagingRequest = {...this.pagingRequest, ...$event}
-    console.log(this.pagingRequest)
     this.fetchLaptopsAgain()
   }
 
@@ -83,6 +98,30 @@ export class ProductComponent implements OnInit {
       this.refreshUi(next);
     }, error => {}, ()=> {
 
+    })
+  }
+
+  laptopIsInUserCartChecker(id: string): boolean {
+    return this.itemsInCart.some(a => a.id === id)
+  }
+
+  getAmountInCart(id: string): number {
+    let item = this.itemsInCart.find(a => a.id ===id);
+    if (item === undefined) {
+      return 0;
+    }
+    return item.amount
+  }
+
+  addLaptopToCart(id: string) {
+    this.cartService.addToCart({laptopId: id}).subscribe(next => {
+      this.userDataService.updateCartSubject();
+    })
+  }
+
+  removeLaptopFromCart(id: string) {
+    this.cartService.removeFromCart({laptopId: id}).subscribe(next => {
+      this.userDataService.updateCartSubject();
     })
   }
 }

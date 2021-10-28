@@ -12,6 +12,7 @@ import {PaginationFormData} from "../../../model/search/pagination-form-data";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {SelectDto} from "../../../model/select-dto";
 import {capitalize} from "lodash";
+import {UserDataService} from "../../../services/user-data.service";
 
 @Component({
   selector: 'app-laptop-tab',
@@ -54,7 +55,7 @@ export class LaptopTabComponent implements OnInit {
   expandedElement: Manufacturer | null | undefined;
   numberOfLaptops: number = 0;
 
-  constructor(private laptopService: LaptopService, private manufacturerService: ManufacturerService) {
+  constructor(private laptopService: LaptopService, private manufacturerService: ManufacturerService, private userDataService: UserDataService) {
     laptopService.fetchAllProducts(this.pagingRequest).subscribe(next => {
       this.laptops = next.page.content
       this.numberOfLaptops = next.page.totalElements
@@ -140,6 +141,7 @@ export class LaptopTabComponent implements OnInit {
     this.laptopService.deleteProduct(id).subscribe(next => {
     }, error => {}, ()=> {
       this.fetchLaptopsAgain();
+      this.userDataService.updateCartSubject()
     })
   }
 }

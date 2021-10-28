@@ -8,10 +8,18 @@
     <mat-icon class="example-icon">security</mat-icon>
     <span>Admin</span>
   </a>
-  <a mat-button>
-    <mat-icon matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
-    <span style="margin-left: 3px">My Cart</span>
-  </a>
+  <ng-template [ngIf]="this.numberOfItemsInCart > 0" [ngIfElse]="elseBlock">
+    <a [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']" [routerLink]="['/cart']" mat-button>
+      <mat-icon matBadge="{{this.numberOfItemsInCart}}" matBadgeColor="warn">shopping_cart</mat-icon>
+      <span style="margin-left: 3px">My Cart</span>
+    </a>
+  </ng-template>
+  <ng-template #elseBlock>
+    <a [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']"  [routerLink]="['/cart']" mat-button>
+      <mat-icon>shopping_cart</mat-icon>
+      <span style="margin-left: 3px">My Cart</span>
+    </a>
+  </ng-template>
   <a mat-button [matMenuTriggerFor]="menu">
     <mat-icon class="example-icon">account_circle</mat-icon>
     <span>{{displayProfileName}}</span>
