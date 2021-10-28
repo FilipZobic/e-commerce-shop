@@ -71,7 +71,7 @@ public class UserController {
     if (!user.getEmail().equals(authentication.getName()) && !UtilitySecurity.userHasAdminRole()) {
       return new ResponseEntity<>("User doesn't have the permissions to request another users information", HttpStatus.FORBIDDEN);
     }
-    return new ResponseEntity<>(Utility.userToDto(user), HttpStatus.OK);
+    return new ResponseEntity<>(Utility.userToDtoWithCartItems(user), HttpStatus.OK);
   }
 
   @PostMapping()

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -19,6 +20,9 @@ public class Laptop extends GenericUuidModel {
   @ManyToOne(optional = false)
   @JoinColumn(name = "manufacturer_id")
   private Manufacturer manufacturer;
+
+  @OneToMany(mappedBy = "id.laptopId",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<CartItem> cart;
 
   @Column(nullable = false)
   private Double price;

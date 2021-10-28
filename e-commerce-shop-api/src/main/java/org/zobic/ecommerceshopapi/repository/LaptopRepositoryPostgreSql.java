@@ -5,8 +5,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.zobic.ecommerceshopapi.dto.QueryResultCartItem;
 import org.zobic.ecommerceshopapi.model.Laptop;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -23,4 +25,9 @@ public interface LaptopRepositoryPostgreSql extends JpaRepository <Laptop, UUID>
 
   @Query("SELECT MAX(laptop.price) FROM Laptop laptop")
   Integer findMaxPrice();
+
+  @Query("SELECT DISTINCT new org.zobic.ecommerceshopapi.dto.QueryResultCartItem(laptop, cart) FROM Laptop laptop " +
+    "JOIN CartItem cart ON laptop.id = cart.id.laptopId " +
+    "LEFT OUTER JOIN User user ON user.id = cart.id.userId WHERE user.id = :id")
+    List<QueryResultCartItem> findAllByUserId(UUID id);
 }

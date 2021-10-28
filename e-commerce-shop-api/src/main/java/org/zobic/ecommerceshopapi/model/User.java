@@ -9,9 +9,7 @@ import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "application_user")
@@ -50,14 +48,52 @@ public class User extends GenericUuidModel {
     inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
   )
   private Collection<Role> roles;
-//
-//  @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+
+//  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 //  @JoinTable(
 //    name = "cart",
 //    joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
 //    inverseJoinColumns = @JoinColumn(name = "laptop_id", referencedColumnName = "id")
 //  )
-//  private List<Laptop> cart;
+  @OneToMany(mappedBy = "id.userId",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<CartItem> cart;
+
+  public void addToCart(CartItem newCartItem, Integer stock) {
+    if (this.cart == null) {
+      this.cart = new HashSet<>();
+    }
+    CartItem oldCartItem = this.cart.stream().filter(s -> s.getId().equals(newCartItem.getId())).findFirst().orElse(null);
+
+    if (oldCartItem != null) {
+      int newAmount = newCartItem.getAmount() + oldCartItem.getAmount();
+      newCartItem.setAmount(newAmount);
+    }
+
+    if (newCartItem.getAmount() <= stock) {
+      this.cart.remove(oldCartItem);
+      this.cart.add(newCartItem);
+    }
+  }
+
+  public void removeFromCart(CartItem newCartItem) {
+    if (this.cart == null) {
+      this.cart = new HashSet<>();
+      return;
+    }
+    CartItem oldCartItem = this.cart.stream().filter(s -> s.getId().equals(newCartItem.getId())).findFirst().orElse(null);
+
+    if (oldCartItem == null) {
+      return;
+    }
+
+    int newAmount = oldCartItem.getAmount() - newCartItem.getAmount();
+    newCartItem.setAmount(newAmount);
+
+    this.cart.remove(oldCartItem);
+    if (newAmount > 0) {
+      this.cart.add(newCartItem);
+    }
+  }
 
   @OneToOne(optional = true, cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "address_id")

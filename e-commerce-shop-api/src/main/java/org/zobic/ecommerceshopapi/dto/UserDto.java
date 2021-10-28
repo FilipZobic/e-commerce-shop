@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import org.zobic.ecommerceshopapi.jackson.WhiteSpaceRemovalDeserializer;
+import org.zobic.ecommerceshopapi.model.CartItem;
 import org.zobic.ecommerceshopapi.util.ValidationPatterns;
 
 import javax.validation.Valid;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -53,4 +55,6 @@ public class UserDto {
   private UUID verificationToken;
 
   private Set<String> grantedAuthorities;
+
+  private Set<CartItem> cart;
 }
