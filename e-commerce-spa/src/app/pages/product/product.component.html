@@ -1,0 +1,50 @@
+<div class="padding-main">
+  <app-laptop-search-form (onEventActivateEmitter)="updateFormSearchValue($event)" [ceil]="ceil" [manufacturers]="manufacturers"></app-laptop-search-form>
+  <div class="card-container">
+    <!--  <mat-grid-list class="padding-main" cols="5" rowHeight="1:2" rowWidth="1:1">-->
+    <!--    <mat-grid-tile>-->
+    <mat-card  *ngFor="let laptop of laptops"  class="example-card card-item">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{laptop.name}}</mat-card-title>
+        <mat-card-subtitle>{{laptop.manufacturer.name}}</mat-card-subtitle>
+      </mat-card-header>
+      <img class="card-image" mat-card-image [src]="parseImage(laptop.image)" alt="Photo of a Shiba Inu">
+      <mat-card-content >
+        <p style="font-size: 22px;">Price: <strong><span style="color: red;">{{roundTo(laptop.price,2)}} $</span></strong></p>
+        <p style="font-size: 22px;">In-Stock: <strong><span>{{laptop.stock}}</span></strong></p>
+        <p>
+          Screen size: {{roundTo(laptop.diagonal, 2)}}" <br>
+          Panel type: {{laptop.panelType}} <br>
+          Ram: {{laptop.ram}} GB <br>
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button (click)="addLaptopToCart(laptop.id)" [disabled]="laptop.stock === 0 || laptop.stock <= getAmountInCart(laptop.id)" mat-button>
+          <mat-icon>add_shopping_cart</mat-icon>
+          <span>ADD</span>
+        </button>
+        <ng-template [ngIf]="laptopIsInUserCartChecker(laptop.id)" [ngIfElse]="elseButton">
+          <button (click)="removeLaptopFromCart(laptop.id)" mat-button>
+            <mat-icon [matBadge]="getAmountInCart(laptop.id)" matBadgeColor="warn">remove_shopping_cart</mat-icon>
+            <span style="margin-left: 5px">REMOVE</span>
+          </button>
+        </ng-template>
+        <ng-template #elseButton>
+          <button [disabled]="true"  mat-button>
+            <mat-icon>remove_shopping_cart</mat-icon>
+            <span style="margin-left: 5px">REMOVE</span>
+          </button>
+        </ng-template>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="pagination-container" style="height: 100px!important;" >
+    <mat-paginator (page)="getPaginatorData($event)" [pageSizeOptions]="[10, 1, 30, 50]"
+                   showFirstLastButtons
+                   aria-label="Select page of periodic elements"
+                   [length]="numberOfLaptops">
+    </mat-paginator>
+  </div>
+</div>

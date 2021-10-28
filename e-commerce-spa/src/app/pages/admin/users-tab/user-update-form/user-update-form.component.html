@@ -1,0 +1,26 @@
+<div style="width: 100%; display: flex; overflow: hidden">
+  <form style="flex-grow: 1; width: 100%; display: flex; flex-direction: row" [formGroup]="form">
+    <div style="margin-bottom: 20px;padding-left: 20px;" class="sub-container">
+      <app-text-input [formGroup]="form" [errorName]="'Full name'" [label]="'Full name'" [formControlNameInput]="'fullName'" [isRequired]="true"></app-text-input>
+      <app-email-input [formGroup]="form"></app-email-input>
+      <app-genericselect [formControlNameInput]="'role'" [formGroup]="form" [label]="'Role'" [selectDtos]="roleSelectDtos"></app-genericselect>
+      <mat-checkbox [formControlName]="'isDeleted'" style="margin-bottom: 20px; font-size: 18px;" color="warn" class="example-margin">Deleted</mat-checkbox>
+      <mat-checkbox [formControlName]="'isEnabled'"  style="font-size: 18px;" color="accent" class="example-margin">Enabled</mat-checkbox>
+    </div>
+    <div class="sub-container" style="margin-left: 40px">
+      <app-country-select [formGroup]="form" [countries]="countries"></app-country-select>
+<!--      <app-password-input [formGroup]="form" [formControlNameInput]="'password'"></app-password-input>-->
+      <app-text-input [formGroup]="form" [errorName]="'City'" [label]="'City'" [formControlNameInput]="'city'" [isRequired]="true"></app-text-input>
+      <app-text-input [formGroup]="form" [errorName]="'Address'" [label]="'Address'" [formControlNameInput]="'address'" [isRequired]="true"></app-text-input>
+      <app-text-input [pattern]="'^[0-9]{5}'" [formGroup]="form" [errorName]="'Zip code'" [label]="'Zip code'" [formControlNameInput]="'zipCode'" [isRequired]="true"></app-text-input>
+    </div>
+
+    <div class="example-spacer"></div>
+    <div style="margin-bottom: 20px; display: flex; flex-direction: column">
+      <button style="margin-bottom: 10px" (click)="onSubmit()" [disabled]="!form.valid || !form.dirty" class="submit" mat-raised-button color="accent">Update</button>
+      <button (click)="onReset()" [disabled]="!form.valid || !form.dirty" class="submit" mat-raised-button color="primary">Reset</button>
+      <div class="example-spacer"></div>
+<!--      <button (click)="onDelete()" [disabled]="form.disabled" class="submit" mat-raised-button color="warn">Delete</button>-->
+    </div>
+  </form>
+</div>

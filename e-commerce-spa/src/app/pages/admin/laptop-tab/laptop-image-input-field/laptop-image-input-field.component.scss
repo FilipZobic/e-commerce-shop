@@ -1,0 +1,56 @@
+
+
+// FILE UPLOAD
+
+.mat-form-field {
+  width: 300px !important;
+}
+
+.mat-toolbar-single-row {
+  height: auto !important;
+  background: transparent;
+}
+
+.mat-toolbar-single-row button {
+  width: 200px;
+}
+
+//.mat-form-field {
+//  width: 100%;
+//}
+
+#uploadFile {
+  background-color: black;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 9;
+  opacity: 0;
+  height: 100%;
+  cursor: pointer;
+}
+
+.example-spacer {
+  flex-grow: 1;
+  //flex: 1 1 auto;
+}
+
+.example-icon {
+  padding: 0 5px 0 0;
+  font-size: 32px;
+  text-align: center;
+  vertical-align: center;
+}
+
+.image-window-white {
+  border: 2px #fff solid;
+}
+
+.image-window-blue {
+  border: 2px #3f51b5 dashed;
+}
+
+.on-box {
+  border: 2px #ff4081 solid !important;
+}

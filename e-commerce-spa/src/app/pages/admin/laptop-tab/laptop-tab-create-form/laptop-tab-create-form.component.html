@@ -1,0 +1,31 @@
+<div id="formContainer" [class.mat-elevation-z8]="true">
+  <h2 style="color: #3f51b5;">Create new Laptop</h2>
+  <form [formGroup]="form">
+    <div class="sub-container">
+      <div >
+        <app-text-input [formGroup]="form" [errorName]="'Laptop Name'" [label]="'Laptop Name'" [formControlNameInput]="'name'" [isRequired]="true"></app-text-input>
+      </div>
+      <div>
+        <app-numberinput [minValue]="0" [formGroup]="form" [errorName]="'Price'" [label]="'Price'" [formControlNameInput]="'price'" [isRequired]="true"></app-numberinput>
+      </div>
+      <div >
+        <app-numberinput [minValue]="0" [formGroup]="form" [errorName]="'Diagonal'" [label]="'Diagonal'" [formControlNameInput]="'diagonal'" [isRequired]="true"></app-numberinput>
+      </div>
+
+      <div >
+        <app-numberinput pattern="^\d*$" [minValue]="0" [formGroup]="form" [errorName]="'Stock'" [label]="'stock'" [formControlNameInput]="'stock'" [isRequired]="true"></app-numberinput>
+      </div>
+
+      <app-genericselect [formControlNameInput]="'manufacturerId'" [formGroup]="form" [label]="'Manufacturer'" [selectDtos]="manufacturersSelectDtos"></app-genericselect>
+      <app-genericselect [formControlNameInput]="'panelType'" [formGroup]="form" [label]="'Panel'" [selectDtos]="panelSelectDtos"></app-genericselect>
+      <app-genericselect [formControlNameInput]="'ram'" [formGroup]="form" [label]="'Ram'" [selectDtos]="ramSelectDtos"></app-genericselect>
+    </div>
+    <div style="margin-left: 20px; padding-left: 20px;" class="sub-container">
+      <app-laptop-image-input-field [image]="image" (imageEmitter)="handleImage($event)"></app-laptop-image-input-field>
+      <div style="margin: 15px 0 15px 0">
+        <button (click)="onSubmit()" [disabled]="!form.valid || image === null" id="submit" mat-raised-button color="accent">Submit</button>
+      </div>
+      <div class="example-spacer"></div>
+    </div>
+  </form>
+</div>

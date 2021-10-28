@@ -1,0 +1,16 @@
+<div [formGroup]=formGroup>
+  <mat-form-field class="example-full-width" appearance="outline">
+    <mat-label>{{placeholder}}</mat-label>
+    <input type="email" matInput [formControlName]='formControlName'
+           placeholder="Ex. pat@example.com">
+    <mat-error *ngIf="this.formGroup.controls.email.hasError('email') && !this.formGroup.controls.email.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="this.formGroup.controls.email.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="this.formGroup.controls.email.hasError('emailIsTaken') && !this.formGroup.controls.email.hasError('email')" >
+      Email is <strong>taken</strong>
+    </mat-error>
+  </mat-form-field>
+</div>

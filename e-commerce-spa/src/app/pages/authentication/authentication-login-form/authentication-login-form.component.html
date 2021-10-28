@@ -1,0 +1,7 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <app-email-input [formGroup]=form>></app-email-input>
+  <app-password-input [minLength]="0" [formGroup]=form></app-password-input>
+  <div>
+    <button [disabled]=!form.valid type="submit" id="submit" mat-raised-button color="primary">Submit</button>
+  </div>
+</form>

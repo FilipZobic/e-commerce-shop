@@ -1,0 +1,18 @@
+<div [formGroup]="formGroup">
+  <mat-form-field appearance="outline">
+    <mat-label>{{label}}</mat-label>
+    <input type="number" matInput [formControlName]=formControlNameInput>
+    <mat-error *ngIf="this.formGroup.controls[formControlNameInput].hasError('required');">
+      {{errorName}} is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="this.formGroup.controls[formControlNameInput].hasError('pattern');">
+      Pattern does not match <strong>{{pattern}}</strong>
+    </mat-error>
+    <mat-error *ngIf="this.formGroup.controls[formControlNameInput].hasError('min')" >
+      The minimum value <strong> is {{minValue}}</strong>
+    </mat-error>
+    <mat-error *ngIf="this.formGroup.controls[formControlNameInput].hasError('max')" >
+      The maximum value <strong> is {{maxValue}}</strong>
+    </mat-error>
+  </mat-form-field>
+</div>

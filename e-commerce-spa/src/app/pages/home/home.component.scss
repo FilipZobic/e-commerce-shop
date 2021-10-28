@@ -1,0 +1,36 @@
+
+
+//.active {
+//  text-decoration: underline;
+//  text-underline: #fff;;
+//  height: 100%;
+//  display: block;
+//}
+
+//span a {
+//  vertical-align: center;
+//  text-align: center;
+//}
+
+
+
+// fix grid items height or add it in list format just like that it will be a lot easier
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  height: 200px!important;
+  width: 100%;
+  background-color: #3f51b5;
+}
+
+#bottom-padding {
+  padding-bottom: 200px!important;
+  display: flex;
+  flex-direction: column;
+}
