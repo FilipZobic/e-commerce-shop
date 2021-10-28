@@ -47,4 +47,11 @@ export class HomeComponent implements OnInit {
     this.headerDisplay = "Home"
     this.router.navigate(['/'])
   }
+
+  cartHandler() {
+
+    this.activeButton = "CART"
+    this.headerDisplay = "My Cart"
+    this.router.navigate(['/cart'])
+  }
 }

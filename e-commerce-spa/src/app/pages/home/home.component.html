@@ -1,4 +1,5 @@
 <app-navigation-bar
+  (openDialogClickedEmitter)="cartHandler()"
   [numberOfItemsInCart]="numberOfItemsInCart"
   [activeButton]="activeButton"
   (signOutButtonClickedEmitter)="logoutEventHandler()"

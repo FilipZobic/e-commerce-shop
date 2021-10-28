@@ -9,13 +9,13 @@
     <span>Admin</span>
   </a>
   <ng-template [ngIf]="this.numberOfItemsInCart > 0" [ngIfElse]="elseBlock">
-    <a [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']" [routerLink]="['/cart']" mat-button>
+    <a (click)="openDialogClickedEmitter.emit()" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']" [routerLink]="['/cart']" mat-button>
       <mat-icon matBadge="{{this.numberOfItemsInCart}}" matBadgeColor="warn">shopping_cart</mat-icon>
       <span style="margin-left: 3px">My Cart</span>
     </a>
   </ng-template>
   <ng-template #elseBlock>
-    <a [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']"  [routerLink]="['/cart']" mat-button>
+    <a (click)="openDialogClickedEmitter.emit()" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']"  [routerLink]="['/cart']" mat-button>
       <mat-icon>shopping_cart</mat-icon>
       <span style="margin-left: 3px">My Cart</span>
     </a>
