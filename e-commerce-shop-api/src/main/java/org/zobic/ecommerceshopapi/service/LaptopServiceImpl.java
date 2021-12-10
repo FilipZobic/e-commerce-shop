@@ -110,7 +110,7 @@ public class LaptopServiceImpl implements LaptopService {
       .stock(updateLaptopDto.getStock())
       .build();
     newLaptop.setId(oldLaptop.getId());
-
+    newLaptop.setCart(oldLaptop.getCart());
     boolean areLaptopsTheSame = oldLaptop.equals(newLaptop);
 
     boolean areImagesTheSame = this.fileSystemService.compareNewAndOldImage(updateLaptopDto.getImage(), fileSystemService.getFile(Path.of(oldLaptop.getCoverImagePath())));

@@ -22,7 +22,8 @@ public class Laptop extends GenericUuidModel {
   private Manufacturer manufacturer;
 
   @OneToMany(mappedBy = "id.laptopId",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-  private Set<CartItem> cart;
+  private Set<CartItem> cart; // hotfix oprhan removal
+//   modifiying the existing object that was selected instead of creating a new one
 
   @Column(nullable = false)
   private Double price;
